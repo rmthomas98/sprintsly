@@ -3,7 +3,13 @@ import Head from "next/head";
 import Image from "next/image";
 
 const Home: NextPage = () => {
-  return <div>pryzma software</div>;
+  return (
+    <>
+      <Head>
+        <title>Pryzma | Sleek and Simple Project Management</title>
+      </Head>
+    </>
+  );
 };
 
 export default Home;
