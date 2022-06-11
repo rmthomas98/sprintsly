@@ -1,2 +1,2 @@
-# pryzmasoftware
-Pryzma project management tool
+# sprintsly
+Sprintsly project management tool
