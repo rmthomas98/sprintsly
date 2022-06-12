@@ -1,0 +1,167 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SubscriptionType {
+  TEAMS
+  PERSONAL
+}
+
+enum Subscription {
+  FREE
+  STANDARD
+  PREMIUM
+}
+
+enum Roles {
+  // team leader / personal subscription
+  ADMIN
+  // moderator of the team
+  MODERATOR
+  // basic user added on by team leader
+  USER
+}
+
+enum PaymentStatus {
+  FAILED
+  SUCCEEDED
+  NO
+}
+
+model User {
+  id                Int              @id @default(autoincrement())
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  firstName         String
+  lastName          String
+  email             String           @unique
+  username          String?          @unique
+  password          String
+  avatar            String?
+  customerId        String?
+  subscriptionId    String?
+  subscription      Subscription
+  subscriptionType  SubscriptionType
+  currentInvoiceId  String?
+  pastInvoices      PastInvoices[]
+  paymentStatus     PaymentStatus    @default(NO)
+  cancelAtPeriodEnd Boolean          @default(false)
+  role              Roles
+  notifications     Notification[]
+  messages          Message[]
+  teams             Team[]
+  projects          Project[]
+  sprints           Sprint[]
+  calendarEvent     CalendarEvent[]
+  files             File[]
+}
+
+model PastInvoices {
+  id        Int    @id @default(autoincrement())
+  amount    String
+  timestamp String
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model Team {
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  name          String          @unique
+  users         User[]
+  projects      Project[]
+  sprints       Sprint[]
+  calendarEvent CalendarEvent[]
+}
+
+model Notification {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  description String
+  read        Boolean  @default(false)
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  read      Boolean  @default(false)
+  from      String // persons username/email/name that sent the message
+  content   String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  team        Team     @relation(fields: [teamId], references: [id])
+  teamId      Int
+  users       User[]
+  name        String
+  description String
+  files       File[]
+}
+
+model Sprint {
+  id         Int          @id @default(autoincrement())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  user       User[]
+  team       Team         @relation(fields: [teamId], references: [id])
+  teamId     Int
+  name       String
+  objectives String[]
+  dueDate    DateTime?
+  completed  Boolean      @default(false)
+  messages   SprintChat[]
+}
+
+model SprintChat {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  from      String
+  message   String
+  Sprint    Sprint?  @relation(fields: [sprintId], references: [id])
+  sprintId  Int?
+  files     File[]
+}
+
+model CalendarEvent {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  date      DateTime
+  users     User[]
+  Team      Team?    @relation(fields: [teamId], references: [id])
+  teamId    Int?
+}
+
+model File {
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  name         String
+  size         String
+  SprintChat   SprintChat? @relation(fields: [sprintChatId], references: [id])
+  sprintChatId Int?
+  Project      Project?    @relation(fields: [projectId], references: [id])
+  projectId    Int?
+  User         User?       @relation(fields: [userId], references: [id])
+  userId       Int?
+}
