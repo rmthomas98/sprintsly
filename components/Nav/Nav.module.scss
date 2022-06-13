@@ -1,0 +1,26 @@
+.wrapper {
+  padding: 10px 16px;
+
+  .container {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: "relative";
+  }
+
+  .centerContainer {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    color: #ff4500;
+  }
+
+  .linkContainer {
+    display: flex;
+    align-items: center;
+  }
+}

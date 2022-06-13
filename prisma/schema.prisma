@@ -10,158 +10,155 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum SubscriptionType {
-  TEAMS
-  PERSONAL
-}
-
-enum Subscription {
-  FREE
-  STANDARD
-  PREMIUM
-}
-
-enum Roles {
-  // team leader / personal subscription
+enum Role {
   ADMIN
-  // moderator of the team
-  MODERATOR
-  // basic user added on by team leader
+  MOD
   USER
 }
 
-enum PaymentStatus {
-  FAILED
-  SUCCEEDED
-  NO
-}
-
 model User {
-  id                Int              @id @default(autoincrement())
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-  firstName         String
-  lastName          String
-  email             String           @unique
-  username          String?          @unique
-  password          String
-  avatar            String?
-  customerId        String?
-  subscriptionId    String?
-  subscription      Subscription
-  subscriptionType  SubscriptionType
-  currentInvoiceId  String?
-  pastInvoices      PastInvoices[]
-  paymentStatus     PaymentStatus    @default(NO)
-  cancelAtPeriodEnd Boolean          @default(false)
-  role              Roles
-  notifications     Notification[]
-  messages          Message[]
-  teams             Team[]
-  projects          Project[]
-  sprints           Sprint[]
-  calendarEvent     CalendarEvent[]
-  files             File[]
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  firstName    String
+  lastName     String
+  email        String        @unique
+  username     String        @unique
+  password     String
+  role         Role
+  Customer     Customer?
+  Subscription Subscription?
+  Card         Card?
+  Team         Team?         @relation(fields: [teamId], references: [id])
+  teamId       Int?
+  branches     Branch[]
+  projects     Project[]
+  sprints      Sprint[]
 }
 
-model PastInvoices {
-  id        Int    @id @default(autoincrement())
-  amount    String
-  timestamp String
-  user      User   @relation(fields: [userId], references: [id])
-  userId    Int
+model Customer {
+  id            Int    @id @default(autoincrement())
+  customerId    String
+  paymentMethod String
+  paymentStatus String
+  user          User   @relation(fields: [userId], references: [id])
+  userId        Int    @unique
+}
+
+enum Type {
+  PERSONAL
+  TEAMS
+}
+
+enum Tier {
+  FREE
+  PRO
+}
+
+model Subscription {
+  id                Int     @id @default(autoincrement())
+  subscriptionId    String?
+  type              Type
+  tier              Tier
+  cancelAtPeriodEnd Boolean @default(false)
+  user              User    @relation(fields: [userId], references: [id])
+  userId            Int     @unique
+}
+
+model Card {
+  id     Int    @id @default(autoincrement())
+  brand  String
+  last4  String
+  month  String
+  year   String
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
 }
 
 model Team {
-  id            Int             @id @default(autoincrement())
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  name          String          @unique
-  users         User[]
-  projects      Project[]
-  sprints       Sprint[]
-  calendarEvent CalendarEvent[]
+  id       Int      @id @default(autoincrement())
+  name     String
+  users    User[]
+  branches Branch[]
+  chat     Chat[]
 }
 
-model Notification {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String
-  description String
-  read        Boolean  @default(false)
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int
-}
-
-model Message {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  read      Boolean  @default(false)
-  from      String // persons username/email/name that sent the message
-  content   String
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
+model Branch {
+  id       Int       @id @default(autoincrement())
+  name     String
+  users    User[]
+  Team     Team      @relation(fields: [teamId], references: [id])
+  teamId   Int
+  projects Project[]
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  team        Team     @relation(fields: [teamId], references: [id])
-  teamId      Int
-  users       User[]
-  name        String
-  description String
-  files       File[]
+  id       Int      @id @default(autoincrement())
+  name     String
+  users    User[]
+  branch   Branch?  @relation(fields: [branchId], references: [id])
+  branchId Int?
+  sprints  Sprint[]
+  chat     Chat[]
+}
+
+enum Importance {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum Status {
+  PROGRESS
+  INCOMPLETE
+  COMPLETE
+  DISCARD
 }
 
 model Sprint {
-  id         Int          @id @default(autoincrement())
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  user       User[]
-  team       Team         @relation(fields: [teamId], references: [id])
-  teamId     Int
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   name       String
   objectives String[]
   dueDate    DateTime?
-  completed  Boolean      @default(false)
-  messages   SprintChat[]
+  importance Importance
+  status     Status
+  users      User[]
+  chat       Chat[]
+  Project    Project?   @relation(fields: [projectId], references: [id])
+  projectId  Int?
 }
 
-model SprintChat {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  from      String
-  message   String
-  Sprint    Sprint?  @relation(fields: [sprintId], references: [id])
-  sprintId  Int?
-  files     File[]
-}
-
-model CalendarEvent {
+model Chat {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  username  String
   name      String
-  date      DateTime
-  users     User[]
+  message   String
+  link      String?
+  download  String?
+  Sprint    Sprint?  @relation(fields: [sprintId], references: [id])
+  sprintId  Int?
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
   Team      Team?    @relation(fields: [teamId], references: [id])
   teamId    Int?
 }
 
 model File {
-  id           Int         @id @default(autoincrement())
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  name         String
-  size         String
-  SprintChat   SprintChat? @relation(fields: [sprintChatId], references: [id])
-  sprintChatId Int?
-  Project      Project?    @relation(fields: [projectId], references: [id])
-  projectId    Int?
-  User         User?       @relation(fields: [userId], references: [id])
-  userId       Int?
+  id   Int    @id @default(autoincrement())
+  name String
+  size String
 }
+
+// model Message {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   from      String
+//   to        String
+//   message   String
+//   User      User?    @relation(fields: [userId], references: [id])
+//   userId    Int?
+// }
