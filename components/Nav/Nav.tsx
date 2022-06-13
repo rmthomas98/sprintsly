@@ -27,22 +27,30 @@ export const Nav = () => {
     <>
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          <Image
-            src="/images/transparent-logo.png"
-            height={45}
-            width={45}
-            style={{ filter: "hue-rotate(200deg)" }}
-          />
+          <NextLink href="/">
+            <Image
+              src="/images/transparent-logo.png"
+              height={45}
+              width={45}
+              style={{ filter: "hue-rotate(200deg)", cursor: "pointer" }}
+            />
+          </NextLink>
           <div className={styles.centerContainer}>
             <NextLink href="/">
               <Link color="text" css={{ fontSize: 13, fontWeight: "$medium" }}>
-                Pricing
+                Products
               </Link>
             </NextLink>
             <Spacer />
             <NextLink href="/">
               <Link color="text" css={{ fontSize: 13, fontWeight: "$medium" }}>
-                Solutions
+                Plans
+              </Link>
+            </NextLink>
+            <Spacer />
+            <NextLink href="/">
+              <Link color="text" css={{ fontSize: 13, fontWeight: "$medium" }}>
+                Pricing
               </Link>
             </NextLink>
             <Spacer />
@@ -87,57 +95,61 @@ export const Nav = () => {
               Log in
             </Link>
             <Spacer />
-            <Button color="gradient" auto size="sm">
-              Sign up
-            </Button>
+            <NextLink href="/pricing">
+              <Button color="gradient" auto size="sm">
+                Sign up
+              </Button>
+            </NextLink>
           </div>
         </div>
       </div>
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={isActive}
-        onClose={() => setIsActive(false)}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={20} weight="medium">
-            Log in to your account
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Email"
-            type="email"
-            contentLeft={<BiEnvelope fill="currentColor" />}
-          />
-          <Input.Password
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Password"
-            type="password"
-            contentLeft={<BiLockAlt fill="currentColor" />}
-          />
-          <Row justify="space-between">
-            <Checkbox>
-              <Text size={14}>Remember me</Text>
-            </Checkbox>
-            <Text size={14}>Forgot password?</Text>
-          </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onClick={() => setIsActive(false)}>
-            Close
-          </Button>
-          <Button auto>Sign in</Button>
-        </Modal.Footer>
-      </Modal>
+      <div style={{ padding: 16 }}>
+        <Modal
+          closeButton
+          aria-labelledby="modal-title"
+          open={isActive}
+          onClose={() => setIsActive(false)}
+        >
+          <Modal.Header>
+            <Text id="modal-title" size={20} weight="medium">
+              Log in to your account
+            </Text>
+          </Modal.Header>
+          <Modal.Body>
+            <Input
+              clearable
+              bordered
+              fullWidth
+              color="primary"
+              size="lg"
+              placeholder="Email"
+              type="email"
+              contentLeft={<BiEnvelope fill="currentColor" />}
+            />
+            <Input.Password
+              bordered
+              fullWidth
+              color="primary"
+              size="lg"
+              placeholder="Password"
+              type="password"
+              contentLeft={<BiLockAlt fill="currentColor" />}
+            />
+            <Row justify="space-between">
+              <Checkbox>
+                <Text size={14}>Remember me</Text>
+              </Checkbox>
+              <Text size={14}>Forgot password?</Text>
+            </Row>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button auto flat color="error" onClick={() => setIsActive(false)}>
+              Close
+            </Button>
+            <Button auto>Sign in</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </>
   );
 };

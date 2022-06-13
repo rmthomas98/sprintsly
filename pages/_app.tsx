@@ -1,7 +1,16 @@
+import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Nav } from "../components/Nav/Nav";
-import { createTheme, NextUIProvider, Theme } from "@nextui-org/react";
+import { createTheme, NextUIProvider, globalCss } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+const globalStyles = globalCss({
+  html: {
+    padding: 0,
+    margin: 0,
+    boxSizing: "border-box",
+  },
+});
 
 const fonts = {
   sans: "Gilroy, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
@@ -45,7 +54,8 @@ export const darkTheme = createTheme({
   },
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  globalStyles();
   return (
     <>
       <NextThemesProvider
@@ -61,6 +71,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       </NextThemesProvider>
     </>
   );
-}
+};
 
 export default MyApp;
