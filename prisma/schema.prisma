@@ -34,6 +34,7 @@ model User {
   branches     Branch[]
   projects     Project[]
   sprints      Sprint[]
+  tasks        Task[]
 }
 
 model Customer {
@@ -128,6 +129,16 @@ model Sprint {
   chat       Chat[]
   Project    Project?   @relation(fields: [projectId], references: [id])
   projectId  Int?
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  user      User[]
+  due       DateTime
+  status    Status
 }
 
 model Chat {
