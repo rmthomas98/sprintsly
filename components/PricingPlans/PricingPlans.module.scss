@@ -1,9 +1,14 @@
 .wrapper {
-  padding: 0px 16px;
+  padding: 16px;
 
   .container {
     max-width: 1000px;
     margin: auto;
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
   }
 
   .flexContainer {
