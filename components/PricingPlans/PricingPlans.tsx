@@ -1,16 +1,8 @@
 import styles from "./PricingPlans.module.scss";
-import {
-  Card,
-  Text,
-  Switch,
-  Checkbox,
-  Row,
-  Divider,
-  Spacer,
-  Button,
-} from "@nextui-org/react";
-import { BiCheck, BiMeteor } from "react-icons/bi";
+import { Row, Button, Text } from "@nextui-org/react";
 import { useState } from "react";
+import { Personal } from "./Personal";
+import { Teams } from "./Teams";
 
 export const PricingPlans = () => {
   const [plans, setPlans] = useState<string>("personal");
@@ -62,90 +54,11 @@ export const PricingPlans = () => {
           weight="medium"
           css={{ textAlign: "center", marginBottom: 30, maxWidth: 600 }}
         >
-          We want to make it as simple as we can for you while providing an easy
-          to navigate user experience. We don&#39;t want to give you the hassle
-          of going through a number of different plans so we decided to only
-          offer a free and paid plan with clear differences.
+          We have a free and pro tier for both the individual and teams plans.
+          We like to keep it simple and straightforward here at Sprintsly.
         </Text> */}
         <div className={styles.flexContainer}>
-          <Card isHoverable css={{ padding: "$8" }}>
-            <Row>
-              <Text
-                weight="semibold"
-                size={14}
-                css={{
-                  color: "$accents6",
-                  letterSpacing: "$wide",
-                  // padding: "$2",
-                  px: "$6",
-                  py: "$0",
-                  borderRadius: "$xs",
-                  background: "$accents1",
-                  width: "fit-content",
-                }}
-              >
-                Free
-              </Text>
-            </Row>
-            <Row css={{ my: "$2" }}>
-              <Text h2>
-                $0.00
-                <Text span small>
-                  {" "}
-                  / month
-                </Text>
-              </Text>
-            </Row>
-            <Divider css={{ mb: "$6" }} />
-            <Row align="center">
-              <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-              <Text
-                weight="bold"
-                color="#787F85"
-                size={14}
-                css={{ letterSpacing: "$wide" }}
-              >
-                Up to 5 projects
-              </Text>
-            </Row>
-            <Row align="center">
-              <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-              <Text
-                weight="bold"
-                color="#787F85"
-                size={14}
-                css={{ letterSpacing: "$wide" }}
-              >
-                Create tasks/todo
-              </Text>
-            </Row>
-            <Row align="center">
-              <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-              <Text
-                weight="bold"
-                color="#787F85"
-                size={14}
-                css={{ letterSpacing: "$wide" }}
-              >
-                Unlimited cloud storage
-              </Text>
-            </Row>
-            <Row align="center">
-              <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-              <Text
-                weight="bold"
-                color="#787F85"
-                size={14}
-                css={{ letterSpacing: "$wide" }}
-              >
-                15mb max file size
-              </Text>
-            </Row>
-          </Card>
-          <Spacer />
-          <Card isHoverable css={{ padding: "$8" }}>
-            <Text>Free</Text>
-          </Card>
+          {plans === "personal" ? <Personal /> : <Teams />}
         </div>
       </div>
     </div>
