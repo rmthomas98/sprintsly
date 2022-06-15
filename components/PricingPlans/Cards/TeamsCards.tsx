@@ -1,7 +1,7 @@
 import { Row, Button, Card, Text, Divider, Spacer } from "@nextui-org/react";
 import { BiMeteor } from "react-icons/bi";
 
-export const Teams = () => {
+export const TeamsCards = () => {
   return (
     <>
       <Card
@@ -36,6 +36,39 @@ export const Teams = () => {
           </Text>
         </Row>
         <Divider css={{ mb: "$6" }} />
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            1 Team
+          </Text>
+        </Row>
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            Up to 3 subteams
+          </Text>
+        </Row>
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            Up to 5 members
+          </Text>
+        </Row>
         <Row align="center">
           <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
           <Text
@@ -88,7 +121,7 @@ export const Teams = () => {
             size={14}
             css={{ letterSpacing: "$wide" }}
           >
-            Create tasks/todo
+            Create & assign tasks
           </Text>
         </Row>
         <Row align="center">
@@ -102,29 +135,6 @@ export const Teams = () => {
             Calendar view
           </Text>
         </Row>
-        {/* <Row align="center">
-              <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-              <Text
-                weight="bold"
-                color="#787F85"
-                size={14}
-                css={{ letterSpacing: "$wide" }}
-              >
-                Create & send invoices
-              </Text>
-            </Row>
-            <Row align="center">
-              <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-              <Text
-                weight="bold"
-                color="#787F85"
-                size={14}
-                css={{ letterSpacing: "$wide" }}
-              >
-                One-off client access
-              </Text>
-            </Row> */}
-
         <Button
           css={{
             position: "absolute",
@@ -162,7 +172,7 @@ export const Teams = () => {
         </Row>
         <Row css={{ my: "$2" }}>
           <Text h2>
-            $8.00
+            $7.00
             <Text span small>
               {" "}
               / user / month
@@ -170,6 +180,39 @@ export const Teams = () => {
           </Text>
         </Row>
         <Divider css={{ mb: "$6" }} />
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            1 Team
+          </Text>
+        </Row>
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            Unlimited subteams
+          </Text>
+        </Row>
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            Unlimited members
+          </Text>
+        </Row>
         <Row align="center">
           <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
           <Text
@@ -200,7 +243,7 @@ export const Teams = () => {
             size={14}
             css={{ letterSpacing: "$wide" }}
           >
-            1gb file uploads
+            1gb max file size
           </Text>
         </Row>
         <Row align="center">
@@ -222,7 +265,7 @@ export const Teams = () => {
             size={14}
             css={{ letterSpacing: "$wide" }}
           >
-            Create tasks/todo
+            Create & assign tasks
           </Text>
         </Row>
         <Row align="center">
@@ -244,7 +287,7 @@ export const Teams = () => {
             size={14}
             css={{ letterSpacing: "$wide" }}
           >
-            Customer database
+            Databases
           </Text>
         </Row>
         <Row align="center">
@@ -255,18 +298,7 @@ export const Teams = () => {
             size={14}
             css={{ letterSpacing: "$wide" }}
           >
-            Time tracking analytics
-          </Text>
-        </Row>
-        <Row align="center">
-          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-          <Text
-            weight="bold"
-            color="#787F85"
-            size={14}
-            css={{ letterSpacing: "$wide" }}
-          >
-            Live video/voice chat
+            Time tracking
           </Text>
         </Row>
         <Row align="center">
@@ -280,6 +312,18 @@ export const Teams = () => {
             Client guest access
           </Text>
         </Row>
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            Live video/voice chat
+          </Text>
+        </Row>
+
         <Button
           css={{
             position: "absolute",

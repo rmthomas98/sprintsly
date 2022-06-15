@@ -1,7 +1,15 @@
-import { Row, Button, Card, Text, Divider, Spacer } from "@nextui-org/react";
+import {
+  Row,
+  Button,
+  Card,
+  Text,
+  Divider,
+  Spacer,
+  Tooltip,
+} from "@nextui-org/react";
 import { BiMeteor } from "react-icons/bi";
 
-export const Personal = () => {
+export const PersonalCards = () => {
   return (
     <>
       <Card
@@ -38,6 +46,7 @@ export const Personal = () => {
         <Divider css={{ mb: "$6" }} />
         <Row align="center">
           <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+
           <Text
             weight="bold"
             color="#787F85"
@@ -102,29 +111,6 @@ export const Personal = () => {
             Calendar view
           </Text>
         </Row>
-        {/* <Row align="center">
-              <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-              <Text
-                weight="bold"
-                color="#787F85"
-                size={14}
-                css={{ letterSpacing: "$wide" }}
-              >
-                Create & send invoices
-              </Text>
-            </Row>
-            <Row align="center">
-              <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
-              <Text
-                weight="bold"
-                color="#787F85"
-                size={14}
-                css={{ letterSpacing: "$wide" }}
-              >
-                One-off client access
-              </Text>
-            </Row> */}
-
         <Button
           css={{
             position: "absolute",
@@ -244,7 +230,7 @@ export const Personal = () => {
             size={14}
             css={{ letterSpacing: "$wide" }}
           >
-            Customer database
+            Databases
           </Text>
         </Row>
         <Row align="center">
@@ -255,10 +241,10 @@ export const Personal = () => {
             size={14}
             css={{ letterSpacing: "$wide" }}
           >
-            Time tracking analytics
+            Time tracking
           </Text>
         </Row>
-        <Row align="center">
+        {/* <Row align="center">
           <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
           <Text
             weight="bold"
@@ -268,7 +254,7 @@ export const Personal = () => {
           >
             Live video/voice chat
           </Text>
-        </Row>
+        </Row> */}
         <Row align="center">
           <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
           <Text

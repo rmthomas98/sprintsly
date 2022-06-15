@@ -71,6 +71,15 @@ export const Nav = () => {
                 Support
               </Link>
             </NextLink>
+            <Spacer />
+            <NextLink href="/">
+              <Link
+                color="text"
+                css={{ fontSize: 13, fontWeight: "$semibold" }}
+              >
+                About
+              </Link>
+            </NextLink>
           </div>
           <div className={styles.linkContainer}>
             {/* <Switch

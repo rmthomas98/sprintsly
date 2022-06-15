@@ -1,8 +1,10 @@
 import styles from "./PricingPlans.module.scss";
-import { Row, Button, Text } from "@nextui-org/react";
+import { Row, Button, Text, Spacer } from "@nextui-org/react";
 import { useState } from "react";
-import { Personal } from "./Personal";
-import { Teams } from "./Teams";
+import { PersonalCards } from "./Cards/PersonalCards";
+import { TeamsCards } from "./Cards/TeamsCards";
+import { PersonalTable } from "./Tables/PersonalTable";
+import { TeamsTable } from "./Tables/TeamsTable";
 
 export const PricingPlans = () => {
   const [plans, setPlans] = useState<string>("personal");
@@ -32,8 +34,22 @@ export const PricingPlans = () => {
             you
           </Text>
         </Text>
-        <Row justify="center" align="center" css={{ mb: "$16" }}>
-          <Button.Group bordered color="primary" size="md">
+        <Spacer />
+        {/* <Text
+          className={styles.description}
+          weight="medium"
+          css={{
+            textAlign: "center",
+            marginBottom: 30,
+            maxWidth: 600,
+            color: "$accents9",
+          }}
+        >
+          We want to make it as simple as we can. This is why we have a free and
+          pro version for personal and team use.
+        </Text> */}
+        <Row justify="center" align="center">
+          <Button.Group bordered color="primary" size="sm">
             <Button
               onClick={() => setPlans("personal")}
               css={plans === "personal" ? backgroundFill : noFill}
@@ -48,18 +64,15 @@ export const PricingPlans = () => {
             </Button>
           </Button.Group>
         </Row>
-        {/* <Text
-          className={styles.description}
-          size={14}
-          weight="medium"
-          css={{ textAlign: "center", marginBottom: 30, maxWidth: 600 }}
-        >
-          We have a free and pro tier for both the individual and teams plans.
-          We like to keep it simple and straightforward here at Sprintsly.
-        </Text> */}
+        <Spacer />
+        <Spacer />
         <div className={styles.flexContainer}>
-          {plans === "personal" ? <Personal /> : <Teams />}
+          {plans === "personal" ? <PersonalCards /> : <TeamsCards />}
         </div>
+        <Spacer />
+        <Spacer />
+        <Spacer />
+        {plans === "personal" ? <PersonalTable /> : <TeamsTable />}
       </div>
     </div>
   );
