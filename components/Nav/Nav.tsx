@@ -11,11 +11,11 @@ import {
   Text,
   Checkbox,
 } from "@nextui-org/react";
-import { IoSunny, IoMoon } from "react-icons/io5";
 import NextLink from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiLockAlt, BiEnvelope } from "react-icons/bi";
+import { BsTwitter, BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
 
 export const Nav = () => {
   const { setTheme } = useNextTheme();
@@ -23,23 +23,43 @@ export const Nav = () => {
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (isDark) {
+      document.querySelector("body")?.classList.add("my-dark-app");
+    } else {
+      document.querySelector("body")?.classList.remove("my-dark-app");
+    }
+  }, [isDark]);
+
   return (
     <>
-      <div className={styles.wrapper}>
+      <div
+        className={styles.wrapper}
+        style={{
+          background: isDark ? "#00000042" : "#ffffff42",
+          borderBottom: isDark ? "1px solid #26292b" : "",
+        }}
+      >
         <div className={styles.container}>
           <NextLink href="/">
-            <Image
-              src="/images/transparent-logo.png"
-              height={45}
-              width={45}
-              style={{ filter: "hue-rotate(200deg)", cursor: "pointer" }}
-            />
+            <a className={styles.logoContainer}>
+              <Image
+                src="/images/transparent-logo.png"
+                height={45}
+                width={45}
+                style={{ filter: "hue-rotate(200deg)", cursor: "pointer" }}
+              />
+              <Spacer x={0.3} />
+              <Text weight="medium" size={22} css={{ fontFamily: "comfortaa" }}>
+                Sprintsly
+              </Text>
+            </a>
           </NextLink>
           <div className={styles.centerContainer}>
             <NextLink href="/">
               <Link
                 color="text"
-                css={{ fontSize: 13, fontWeight: "$semibold" }}
+                css={{ fontSize: 14, fontWeight: "$semibold" }}
               >
                 Products
               </Link>
@@ -48,16 +68,16 @@ export const Nav = () => {
             <NextLink href="/">
               <Link
                 color="text"
-                css={{ fontSize: 13, fontWeight: "$semibold" }}
+                css={{ fontSize: 14, fontWeight: "$semibold" }}
               >
                 Plans
               </Link>
             </NextLink>
             <Spacer />
-            <NextLink href="/">
+            <NextLink href="/pricing">
               <Link
                 color="text"
-                css={{ fontSize: 13, fontWeight: "$semibold" }}
+                css={{ fontSize: 14, fontWeight: "$semibold" }}
               >
                 Pricing
               </Link>
@@ -66,18 +86,18 @@ export const Nav = () => {
             <NextLink href="/">
               <Link
                 color="text"
-                css={{ fontSize: 13, fontWeight: "$semibold" }}
+                css={{ fontSize: 14, fontWeight: "$semibold" }}
               >
-                Support
+                About
               </Link>
             </NextLink>
             <Spacer />
             <NextLink href="/">
               <Link
                 color="text"
-                css={{ fontSize: 13, fontWeight: "$semibold" }}
+                css={{ fontSize: 14, fontWeight: "$semibold" }}
               >
-                About
+                Support
               </Link>
             </NextLink>
           </div>
@@ -94,14 +114,19 @@ export const Nav = () => {
             }
           />
           <Spacer /> */}
-            <Link color="text">
+            <Link href="/" css={{ color: "$accents7" }}>
+              <BsTwitter size={18} style={{ cursor: "pointer" }} />
+            </Link>
+            <Spacer x={0.5} />
+            <Link color="text" css={{ color: "$accents7" }}>
               {isDark ? (
-                <IoMoon
+                <BsFillMoonFill
                   onClick={() => setTheme("light")}
                   style={{ cursor: "pointer" }}
                 />
               ) : (
-                <IoSunny
+                <BsFillSunFill
+                  size={18}
                   onClick={() => setTheme("dark")}
                   style={{ cursor: "pointer" }}
                 />
@@ -111,13 +136,13 @@ export const Nav = () => {
             <Link
               onClick={() => setIsActive(true)}
               color="text"
-              css={{ fontSize: 13, fontWeight: "$semibold" }}
+              css={{ fontSize: 14, fontWeight: "$semibold" }}
             >
               Log in
             </Link>
             <Spacer />
             <NextLink href="/pricing">
-              <Button color="gradient" auto size="sm">
+              <Button color="primary" flat auto size="sm">
                 Sign up
               </Button>
             </NextLink>
@@ -125,6 +150,7 @@ export const Nav = () => {
         </div>
       </div>
       <Modal
+        blur
         closeButton
         aria-labelledby="modal-title"
         open={isActive}

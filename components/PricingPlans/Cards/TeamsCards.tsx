@@ -6,7 +6,11 @@ export const TeamsCards = () => {
     <>
       <Card
         isHoverable
-        css={{ padding: "$8", pb: "$20", position: "relative" }}
+        css={{
+          padding: "$8",
+          pb: "$20",
+          position: "relative",
+        }}
       >
         <Row>
           <Text

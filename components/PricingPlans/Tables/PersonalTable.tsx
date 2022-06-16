@@ -25,6 +25,7 @@ export const PersonalTable = () => {
         css={{ height: "auto", width: "100%" }}
         bordered={isDark ? true : false}
         lined
+        shadow
       >
         <Table.Header>
           <Table.Column>FATURES</Table.Column>

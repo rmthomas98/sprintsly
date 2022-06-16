@@ -24,11 +24,11 @@ export const PricingPlans = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <Text h2 className={styles.header}>
+        <Text h1 className={styles.header}>
           Choose the right plan for{" "}
           <Text
             span
-            weight="bold"
+            weight="extrabold"
             css={{
               textGradient: "45deg, $purple600 -20%, $pink600 100%",
             }}
@@ -73,7 +73,7 @@ export const PricingPlans = () => {
         <Spacer y={4} />
         {plans === "personal" ? <PersonalTable /> : <TeamsTable />}
         <Spacer y={4} />
-        <Faq />
+        <Faq plans={plans} />
       </div>
     </div>
   );

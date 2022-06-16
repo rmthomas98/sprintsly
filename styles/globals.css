@@ -1,0 +1,6 @@
+.my-dark-app {
+  background-image: url("/images/gradient-bg.svg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}

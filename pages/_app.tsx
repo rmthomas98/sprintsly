@@ -24,18 +24,6 @@ export const lightTheme = createTheme({
   type: "light",
   theme: {
     fonts: fonts,
-    // colors: {
-    //   primaryLight: "#FFEBCC",
-    //   primaryLightHover: "#FFD199", // commonly used on hover state
-    //   primaryLightActive: "#FFB166", // commonly used on pressed state
-    //   primaryLightContrast: "#FF5F00", // commonly used for text inside the component
-    //   primary: "#FF5F00",
-    //   primaryBorder: "#FF923F",
-    //   primaryBorderHover: "#FF5F00",
-    //   primarySolidHover: "#DB4400",
-    //   primarySolidContrast: "$white", // commonly used for text inside the component
-    //   primaryShadow: "#FF923F",
-    // },
   },
 });
 
@@ -43,23 +31,12 @@ export const darkTheme = createTheme({
   type: "dark",
   theme: {
     fonts: fonts,
-    // colors: {
-    //   primaryLight: "#7A0F00",
-    //   primaryLightHover: "#931B00", // commonly used on hover state
-    //   primaryLightActive: "#B72D00", // commonly used on pressed state
-    //   primaryLightContrast: "#FF5F00", // commonly used for text inside the component
-    //   primary: "#FF5F00",
-    //   primaryBorder: "#DB4400",
-    //   primaryBorderHover: "#FF5F00",
-    //   primarySolidHover: "#FF923F",
-    //   primarySolidContrast: "$white", // commonly used for text inside the component
-    //   primaryShadow: "#DB4400",
-    // },
   },
 });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   globalStyles();
+
   return (
     <>
       <NextThemesProvider
