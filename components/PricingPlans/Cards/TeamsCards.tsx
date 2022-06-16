@@ -135,6 +135,17 @@ export const TeamsCards = () => {
             Calendar view
           </Text>
         </Row>
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            Live chat
+          </Text>
+        </Row>
         <Button
           css={{
             position: "absolute",
@@ -287,6 +298,17 @@ export const TeamsCards = () => {
             size={14}
             css={{ letterSpacing: "$wide" }}
           >
+            Assign roles
+          </Text>
+        </Row>
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
             Databases
           </Text>
         </Row>
@@ -310,6 +332,17 @@ export const TeamsCards = () => {
             css={{ letterSpacing: "$wide" }}
           >
             Client guest access
+          </Text>
+        </Row>
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            Channel chat
           </Text>
         </Row>
         <Row align="center">

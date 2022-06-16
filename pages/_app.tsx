@@ -10,6 +10,10 @@ const globalStyles = globalCss({
     margin: 0,
     boxSizing: "border-box",
   },
+  ".nextui-collapse-title": {
+    fontSize: 16,
+    fontWeight: "$semibold",
+  },
 });
 
 const fonts = {

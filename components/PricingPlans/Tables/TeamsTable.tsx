@@ -6,7 +6,7 @@ export const TeamsTable = () => {
   const { isDark } = useTheme();
 
   return (
-    <div style={{ maxWidth: 600, margin: "auto" }} className={styles.container}>
+    <div className={styles.container}>
       <Text h2 className={styles.header}>
         Compare{" "}
         <Text
@@ -36,10 +36,22 @@ export const TeamsTable = () => {
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
               Teams
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               1 Team
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               1 Team
             </Table.Cell>
           </Table.Row>
@@ -47,10 +59,22 @@ export const TeamsTable = () => {
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
               Subteams
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               Up to 3
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               Unlimited
             </Table.Cell>
           </Table.Row>
@@ -58,10 +82,22 @@ export const TeamsTable = () => {
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
               Members
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               Up to 5
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               Unlimited
             </Table.Cell>
           </Table.Row>
@@ -69,10 +105,22 @@ export const TeamsTable = () => {
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
               Projects
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               Up to 5
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               Unlimited
             </Table.Cell>
           </Table.Row>
@@ -80,10 +128,22 @@ export const TeamsTable = () => {
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
               Cloud storage
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               15GB
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               Unlimited
             </Table.Cell>
           </Table.Row>
@@ -91,21 +151,45 @@ export const TeamsTable = () => {
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
               File sharing
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
-              Calendar View
+              Calendar view
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
           </Table.Row>
@@ -113,43 +197,45 @@ export const TeamsTable = () => {
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
               Create tasks
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
-              <BiCheck size={18} color="#17C964" />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
-              Databases
-            </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
-              <BiX size={18} color="#F31260" />
-            </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
-              <BiCheck size={18} color="#17C964" />
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
-              Time Tracking
-            </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
-              <BiX size={18} color="#F31260" />
-            </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
-              Guest Access
+              Live chat
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
-              <BiX size={18} color="#F31260" />
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiCheck size={18} color="#17C964" />
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
           </Table.Row>
@@ -157,10 +243,137 @@ export const TeamsTable = () => {
             <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
               Voice/video chat
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiX size={18} color="#F31260" />
             </Table.Cell>
-            <Table.Cell css={{ fontSize: 14, fontWeight: "$medium" }}>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiCheck size={18} color="#17C964" />
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
+              Chat channels
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiX size={18} color="#F31260" />
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiCheck size={18} color="#17C964" />
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
+              Assign roles
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiX size={18} color="#F31260" />
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiCheck size={18} color="#17C964" />
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
+              Databases
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiX size={18} color="#F31260" />
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiCheck size={18} color="#17C964" />
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
+              Time tracking
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiX size={18} color="#F31260" />
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiCheck size={18} color="#17C964" />
+            </Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
+              Guest access
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiX size={18} color="#F31260" />
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
           </Table.Row>

@@ -5,6 +5,8 @@ import { PersonalCards } from "./Cards/PersonalCards";
 import { TeamsCards } from "./Cards/TeamsCards";
 import { PersonalTable } from "./Tables/PersonalTable";
 import { TeamsTable } from "./Tables/TeamsTable";
+import { Faq } from "./Faq/Faq";
+import { SP } from "next/dist/shared/lib/utils";
 
 export const PricingPlans = () => {
   const [plans, setPlans] = useState<string>("personal");
@@ -64,15 +66,14 @@ export const PricingPlans = () => {
             </Button>
           </Button.Group>
         </Row>
-        <Spacer />
-        <Spacer />
+        <Spacer y={2} />
         <div className={styles.flexContainer}>
           {plans === "personal" ? <PersonalCards /> : <TeamsCards />}
         </div>
-        <Spacer />
-        <Spacer />
-        <Spacer />
+        <Spacer y={4} />
         {plans === "personal" ? <PersonalTable /> : <TeamsTable />}
+        <Spacer y={4} />
+        <Faq />
       </div>
     </div>
   );
