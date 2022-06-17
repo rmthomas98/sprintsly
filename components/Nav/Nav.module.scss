@@ -4,7 +4,6 @@
   top: 0;
   z-index: 9999;
   backdrop-filter: blur(7px);
-  border-bottom: 1px solid #ecedee;
 
   .container {
     max-width: 1000px;
@@ -16,6 +15,8 @@
   }
 
   .logoContainer {
+    filter: hue-rotate(200deg);
+    cursor: pointer;
     display: flex;
     align-items: center;
   }

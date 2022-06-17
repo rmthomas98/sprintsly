@@ -1,0 +1,42 @@
+.wrapper {
+  padding: 75px 16px;
+
+  .container {
+    max-width: 1000px;
+    margin: auto;
+
+    .flexContainer {
+      display: flex;
+      justify-content: space-between;
+
+      .companyContainer {
+        min-width: 300px;
+
+        .logoName {
+          filter: hue-rotate(200deg);
+          margin-bottom: 10px;
+        }
+
+        .socialIconContainer {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+        }
+      }
+
+      .linkContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px;
+
+        .exploreContainer,
+        .documents,
+        .contact {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

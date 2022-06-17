@@ -31,7 +31,7 @@ export const Faq = (props: Props) => {
               organized, especially if you are a large business all trying to
               work together. A subteam could be created for the marketing team,
               another one for the finance team, another one for the technology
-              team, and so on. Making the subteams whatever you wish.
+              team, and so on.
             </Text>
             <Button
               iconRight={<BiRightArrowAlt />}

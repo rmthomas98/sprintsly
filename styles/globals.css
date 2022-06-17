@@ -4,3 +4,7 @@
   background-position: center;
   background-attachment: fixed;
 }
+
+body {
+  min-height: 100vh !important;
+}

@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from "@nextui-org/react";
 import { BiMeteor } from "react-icons/bi";
+import Link from "next/link";
 
 export const PersonalCards = () => {
   return (
@@ -266,17 +267,19 @@ export const PersonalCards = () => {
             Client guest access
           </Text>
         </Row>
-        <Button
-          css={{
-            position: "absolute",
-            bottom: 16,
-            left: 16,
-            right: 16,
-          }}
-          color="gradient"
-        >
-          Select plan
-        </Button>
+        <Link href="/signup">
+          <Button
+            css={{
+              position: "absolute",
+              bottom: 16,
+              left: 16,
+              right: 16,
+            }}
+            color="gradient"
+          >
+            Select plan
+          </Button>
+        </Link>
       </Card>
     </>
   );

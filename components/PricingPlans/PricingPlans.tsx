@@ -6,7 +6,6 @@ import { TeamsCards } from "./Cards/TeamsCards";
 import { PersonalTable } from "./Tables/PersonalTable";
 import { TeamsTable } from "./Tables/TeamsTable";
 import { Faq } from "./Faq/Faq";
-import { SP } from "next/dist/shared/lib/utils";
 
 export const PricingPlans = () => {
   const [plans, setPlans] = useState<string>("personal");

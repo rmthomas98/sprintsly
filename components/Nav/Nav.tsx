@@ -15,11 +15,20 @@ import NextLink from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BiLockAlt, BiEnvelope } from "react-icons/bi";
-import { BsTwitter, BsFillSunFill, BsFillMoonFill } from "react-icons/bs";
+import {
+  BsTwitter,
+  BsFillSunFill,
+  BsFillMoonFill,
+  BsFacebook,
+  BsLinkedin,
+} from "react-icons/bs";
+import { useRouter } from "next/router";
 
 export const Nav = () => {
   const { setTheme } = useNextTheme();
   const { isDark } = useTheme();
+
+  const router = useRouter();
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -37,7 +46,7 @@ export const Nav = () => {
         className={styles.wrapper}
         style={{
           background: isDark ? "#00000042" : "#ffffff42",
-          borderBottom: isDark ? "1px solid #26292b" : "",
+          borderBottom: isDark ? "1px solid #26292b" : "1px solid #ecedee",
         }}
       >
         <div className={styles.container}>
@@ -47,7 +56,6 @@ export const Nav = () => {
                 src="/images/transparent-logo.png"
                 height={45}
                 width={45}
-                style={{ filter: "hue-rotate(200deg)", cursor: "pointer" }}
               />
               <Spacer x={0.3} />
               <Text weight="medium" size={22} css={{ fontFamily: "comfortaa" }}>
@@ -76,8 +84,13 @@ export const Nav = () => {
             <Spacer />
             <NextLink href="/pricing">
               <Link
-                color="text"
-                css={{ fontSize: 14, fontWeight: "$semibold" }}
+                color={
+                  router.pathname.endsWith("/pricing") ? "primary" : "text"
+                }
+                css={{
+                  fontSize: 14,
+                  fontWeight: "$semibold",
+                }}
               >
                 Pricing
               </Link>
@@ -91,7 +104,7 @@ export const Nav = () => {
                 About
               </Link>
             </NextLink>
-            <Spacer />
+            {/* <Spacer />
             <NextLink href="/">
               <Link
                 color="text"
@@ -99,7 +112,7 @@ export const Nav = () => {
               >
                 Support
               </Link>
-            </NextLink>
+            </NextLink> */}
           </div>
           <div className={styles.linkContainer}>
             {/* <Switch
@@ -115,9 +128,17 @@ export const Nav = () => {
           />
           <Spacer /> */}
             <Link href="/" css={{ color: "$accents7" }}>
+              <BsFacebook size={18} style={{ cursor: "pointer" }} />
+            </Link>
+            <Spacer x={0.4} />
+            <Link href="/" css={{ color: "$accents7" }}>
+              <BsLinkedin size={18} style={{ cursor: "pointer" }} />
+            </Link>
+            <Spacer x={0.4} />
+            <Link href="/" css={{ color: "$accents7" }}>
               <BsTwitter size={18} style={{ cursor: "pointer" }} />
             </Link>
-            <Spacer x={0.5} />
+            <Spacer x={0.4} />
             <Link color="text" css={{ color: "$accents7" }}>
               {isDark ? (
                 <BsFillMoonFill
