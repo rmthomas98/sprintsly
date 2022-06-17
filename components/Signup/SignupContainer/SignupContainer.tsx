@@ -12,13 +12,14 @@ export const SignupContainer = () => {
             span
             weight="bold"
             css={{
-              textGradient: "45deg, $green600 -20%, $blue600 100%",
+              textGradient: "45deg, $pink700 , $blue600 100%",
             }}
           >
             Sprintsly
           </Text>
         </Text>
         <Spacer />
+
         <SignupForm />
       </div>
     </div>
