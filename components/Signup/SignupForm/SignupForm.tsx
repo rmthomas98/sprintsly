@@ -1,80 +1,79 @@
 import styles from "./SignupForm.module.scss";
+import { Input, Spacer, Card, Text, Button } from "@nextui-org/react";
 import {
-  Button,
-  Input,
-  Radio,
-  Spacer,
-  Switch,
-  Text,
-  Card,
-} from "@nextui-org/react";
-import { BiLockAlt, BiEnvelope, BiUser, BiGroup } from "react-icons/bi";
-import { BsFillPersonFill, BsFillPeopleFill } from "react-icons/bs";
-import { useState } from "react";
+  BiLockAlt,
+  BiEnvelope,
+  BiUser,
+  BiGroup,
+  BiRightArrowAlt,
+  BiLeftArrowAlt,
+} from "react-icons/bi";
 
-export const SignupForm = () => {
-  const [plan, setPlan] = useState<string>("personal");
+interface Props {
+  accountInfo: any;
+  setAccountInfo: any;
+  setStep: any;
+}
 
+export const SignupForm = (props: Props) => {
   return (
-    <div className={styles.container}>
-      <form>
-        {/* <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text css={{ mr: "$5" }} weight="medium" size={16}>
-            Personal
-          </Text>
-          <Switch
-            iconOn={<BsFillPeopleFill />}
-            iconOff={<BsFillPersonFill />}
-            size="md"
-            shadow
-            color="primary"
-            css={{ position: "relative", bottom: 2 }}
-            onChange={(e) =>
-              e.target.checked ? setPlan("teams") : setPlan("personal")
-            }
-          />
-          <Text css={{ ml: "$5" }} size={16} weight="medium">
-            Teams
-          </Text>
-        </div> */}
-        {/* <Radio.Group
-          size="xs"
-          orientation="horizontal"
-          label="How will you use Sprintsly?"
-        >
-          <Radio value="personal">Personal</Radio>
-          <Radio value="teams">Teams</Radio>
-        </Radio.Group> */}
-        {/* <Spacer />
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Radio.Group
-            css={{ textAlign: "center", alignItems: "center" }}
-            size="xs"
-            orientation="horizontal"
-            label="Select your plan"
-          >
-            <Radio value="free">Free</Radio>
-            <Radio value="pro">Pro</Radio>
-          </Radio.Group>
-        </div>
-        <Spacer /> */}
-        <Card>
-          <Card.Header>
-            <Text h4 css={{ textTransform: "capitalize" }}>
-              {plan}
+    <div className={`${styles.container} ${styles.fade}`}>
+      <Card css={{ px: "$8", py: "$4" }} isHoverable>
+        {/* <Card.Header css={{ padding: "$4" }}>
+          <Text h3>Your selected plan</Text>
+        </Card.Header>
+        <Divider /> */}
+        <Card.Body css={{ padding: "$4", py: "$8" }}>
+          <div className={styles.cardFlexContainer}>
+            <div>
+              <Text h4 css={{ textTransform: "capitalize" }}>
+                {props.accountInfo.plan}
+              </Text>
+
+              <Text
+                weight="semibold"
+                size={14}
+                css={{ textTransform: "capitalize", color: "$accents8" }}
+              >
+                sprintsly {props.accountInfo.tier}
+              </Text>
+            </div>
+
+            <Text h2>
+              {props.accountInfo.plan === "teams" &&
+              props.accountInfo.tier === "pro"
+                ? "$7.00"
+                : props.accountInfo.plan === "personal" &&
+                  props.accountInfo.tier === "pro"
+                ? "$5.00"
+                : "$0.00"}
+              <Text span small>
+                {" "}
+                {props.accountInfo.plan === "teams" &&
+                props.accountInfo.tier === "pro"
+                  ? "/user/month"
+                  : "/month"}
+              </Text>
             </Text>
-          </Card.Header>
-          <Card.Body>
-            <Text></Text>
-          </Card.Body>
-        </Card>
-        <Spacer />
+          </div>
+        </Card.Body>
+        <Card.Footer css={{ padding: "$4" }}>
+          <Button
+            icon={<BiLeftArrowAlt size={18} />}
+            color="warning"
+            flat
+            size="sm"
+            css={{ width: "100%" }}
+            onClick={() => props.setStep(1)}
+          >
+            Change plan
+          </Button>
+        </Card.Footer>
+      </Card>
+      <Spacer />
+      <Text h5>Account information</Text>
+      <Spacer />
+      <form>
         <div className={styles.nameContainer}>
           <Input
             placeholder="First name"
@@ -82,7 +81,6 @@ export const SignupForm = () => {
             bordered
             size="md"
             type="text"
-            color="primary"
             aria-label="First name"
           />
           <Spacer />
@@ -92,7 +90,6 @@ export const SignupForm = () => {
             bordered
             size="md"
             type="text"
-            color="primary"
             aria-label="Last name"
             // status="error"
           />
@@ -104,7 +101,6 @@ export const SignupForm = () => {
           bordered
           size="md"
           type="email"
-          color="primary"
           aria-label="Email"
           contentLeft={<BiEnvelope />}
         />
@@ -115,7 +111,6 @@ export const SignupForm = () => {
           bordered
           size="md"
           type="text"
-          color="primary"
           aria-label="Username"
           contentLeft={<BiUser />}
         />
@@ -126,7 +121,6 @@ export const SignupForm = () => {
           bordered
           size="md"
           type="text"
-          color="primary"
           aria-label="Team name"
           contentLeft={<BiGroup />}
         />
@@ -136,11 +130,20 @@ export const SignupForm = () => {
           fullWidth
           bordered
           size="md"
-          color="primary"
           aria-label="Password"
           contentLeft={<BiLockAlt />}
         />
         <Spacer />
+        <Button
+          css={{ width: "100%" }}
+          iconRight={
+            props.accountInfo.tier === "pro" && <BiRightArrowAlt size={18} />
+          }
+        >
+          {props.accountInfo.tier === "pro"
+            ? "Continue to payment"
+            : "Create account"}
+        </Button>
       </form>
     </div>
   );

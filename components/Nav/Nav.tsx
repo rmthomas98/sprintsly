@@ -162,7 +162,7 @@ export const Nav = () => {
               Log in
             </Link>
             <Spacer />
-            <NextLink href="/pricing">
+            <NextLink href="/signup">
               <Button color="primary" flat auto size="sm">
                 Sign up
               </Button>
