@@ -1,26 +1,22 @@
 import styles from "./Nav.module.scss";
 import { useTheme as useNextTheme } from "next-themes";
 import {
-  Input,
-  Row,
   useTheme,
   Link,
   Spacer,
   Button,
-  Modal,
   Text,
-  Checkbox,
+  Tooltip,
 } from "@nextui-org/react";
 import NextLink from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { BiLockAlt, BiEnvelope } from "react-icons/bi";
+import { useEffect } from "react";
 import {
   BsTwitter,
   BsFillSunFill,
   BsFillMoonFill,
-  BsFacebook,
   BsLinkedin,
+  BsYoutube,
 } from "react-icons/bs";
 import { useRouter } from "next/router";
 
@@ -29,8 +25,6 @@ export const Nav = () => {
   const { isDark } = useTheme();
 
   const router = useRouter();
-
-  const [isActive, setIsActive] = useState<boolean>(false);
 
   useEffect(() => {
     if (isDark) {
@@ -56,6 +50,7 @@ export const Nav = () => {
                 src="/images/transparent-logo.png"
                 height={45}
                 width={45}
+                alt="sprintsly logo"
               />
               <Spacer x={0.3} />
               <Text weight="medium" size={22} css={{ fontFamily: "comfortaa" }}>
@@ -104,63 +99,79 @@ export const Nav = () => {
                 About
               </Link>
             </NextLink>
-            {/* <Spacer />
-            <NextLink href="/">
+          </div>
+          <div className={styles.linkContainer}>
+            <Tooltip
+              offset={20}
+              css={{ zIndex: 9999 }}
+              content={"LinkedIn"}
+              placement="bottom"
+              color="invert"
+              shadow
+            >
+              <Link href="/" css={{ color: "$accents7" }}>
+                <BsLinkedin size={18} style={{ cursor: "pointer" }} />
+              </Link>
+            </Tooltip>
+            <Spacer x={0.4} />
+            <Tooltip
+              offset={20}
+              css={{ zIndex: 9999 }}
+              content={"Youtube"}
+              placement="bottom"
+              color="invert"
+              shadow
+            >
+              <Link href="/" css={{ color: "$accents7" }}>
+                <BsYoutube size={18} style={{ cursor: "pointer" }} />
+              </Link>
+            </Tooltip>
+            <Spacer x={0.4} />
+            <Tooltip
+              offset={20}
+              css={{ zIndex: 9999 }}
+              content={"Twitter"}
+              placement="bottom"
+              color="invert"
+              shadow
+            >
+              <Link href="/" css={{ color: "$accents7" }}>
+                <BsTwitter size={18} style={{ cursor: "pointer" }} />
+              </Link>
+            </Tooltip>
+            <Spacer x={0.4} />
+            <Tooltip
+              offset={20}
+              css={{ zIndex: 9999 }}
+              content={isDark ? "Light mode" : "Dark mode"}
+              placement="bottom"
+              color="invert"
+              shadow
+            >
+              <Link color="text" css={{ color: "$accents7" }}>
+                {isDark ? (
+                  <BsFillSunFill
+                    onClick={() => setTheme("light")}
+                    style={{ cursor: "pointer" }}
+                  />
+                ) : (
+                  <BsFillMoonFill
+                    size={18}
+                    onClick={() => setTheme("dark")}
+                    style={{ cursor: "pointer" }}
+                  />
+                )}
+              </Link>
+            </Tooltip>
+            <Spacer />
+            <NextLink href="/login">
               <Link
                 color="text"
                 css={{ fontSize: 14, fontWeight: "$semibold" }}
               >
-                Support
+                Log in
               </Link>
-            </NextLink> */}
-          </div>
-          <div className={styles.linkContainer}>
-            {/* <Switch
-            css={{ position: "relative", bottom: 3 }}
-            color="secondary"
-            checked={isDark}
-            iconOn={<IoMoon />}
-            iconOff={<IoSunny />}
-            size="xs"
-            onChange={(e) =>
-              e.target.checked ? setTheme("dark") : setTheme("light")
-            }
-          />
-          <Spacer /> */}
-            <Link href="/" css={{ color: "$accents7" }}>
-              <BsFacebook size={18} style={{ cursor: "pointer" }} />
-            </Link>
-            <Spacer x={0.4} />
-            <Link href="/" css={{ color: "$accents7" }}>
-              <BsLinkedin size={18} style={{ cursor: "pointer" }} />
-            </Link>
-            <Spacer x={0.4} />
-            <Link href="/" css={{ color: "$accents7" }}>
-              <BsTwitter size={18} style={{ cursor: "pointer" }} />
-            </Link>
-            <Spacer x={0.4} />
-            <Link color="text" css={{ color: "$accents7" }}>
-              {isDark ? (
-                <BsFillMoonFill
-                  onClick={() => setTheme("light")}
-                  style={{ cursor: "pointer" }}
-                />
-              ) : (
-                <BsFillSunFill
-                  size={18}
-                  onClick={() => setTheme("dark")}
-                  style={{ cursor: "pointer" }}
-                />
-              )}
-            </Link>
-            <Spacer />
-            <Link
-              onClick={() => setIsActive(true)}
-              color="text"
-              css={{ fontSize: 14, fontWeight: "$semibold" }}
-            >
-              Log in
-            </Link>
+            </NextLink>
             <Spacer />
             <NextLink href="/signup">
               <Button color="primary" flat auto size="sm">
@@ -170,52 +181,6 @@ export const Nav = () => {
           </div>
         </div>
       </div>
-      <Modal
-        blur
-        closeButton
-        aria-labelledby="modal-title"
-        open={isActive}
-        onClose={() => setIsActive(false)}
-      >
-        <Modal.Header>
-          <Text id="modal-title" size={20} weight="medium">
-            Log in to your account
-          </Text>
-        </Modal.Header>
-        <Modal.Body>
-          <Input
-            clearable
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Email"
-            type="email"
-            contentLeft={<BiEnvelope fill="currentColor" />}
-          />
-          <Input.Password
-            bordered
-            fullWidth
-            color="primary"
-            size="lg"
-            placeholder="Password"
-            type="password"
-            contentLeft={<BiLockAlt fill="currentColor" />}
-          />
-          <Row justify="space-between">
-            <Checkbox>
-              <Text size={14}>Remember me</Text>
-            </Checkbox>
-            <Text size={14}>Forgot password?</Text>
-          </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button auto flat color="error" onClick={() => setIsActive(false)}>
-            Close
-          </Button>
-          <Button auto>Sign in</Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 };

@@ -11,22 +11,42 @@ import {
 } from "@nextui-org/react";
 import { BsFillPersonFill, BsFillPeopleFill } from "react-icons/bs";
 import { BiRightArrowAlt } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 interface Props {
   setAccountInfo: any;
+  accountInfo: any;
   setStep: any;
+  step: number;
 }
 
 export const PlanSelect = (props: Props) => {
   const [plan, setPlan] = useState<string>("personal");
   const [tier, setTier] = useState<string>("free");
 
-  const handleSubmit = () => {
+  const router = useRouter();
+
+  const handleSubmit = (): void => {
     props.setAccountInfo({ plan: plan, tier: tier });
     props.setStep(2);
   };
+
+  useEffect(() => {
+    if (!router.query?.plan && !router.query.tier) return;
+    const selectedPlan: any = router.query.plan;
+    const selectedTier: any = router.query.tier;
+    setPlan(selectedPlan);
+    setTier(selectedTier);
+  }, []);
+
+  useEffect(() => {
+    if (props.accountInfo?.plan && props.accountInfo.tier) {
+      setPlan(props.accountInfo.plan);
+      setTier(props.accountInfo.tier);
+    }
+  }, []);
 
   return (
     <div className={`${styles.container} ${styles.fade}`}>
@@ -109,7 +129,7 @@ export const PlanSelect = (props: Props) => {
           <Button
             iconRight={<BiRightArrowAlt size={18} />}
             color="primary"
-            size="sm"
+            size="md"
             css={{ width: "100%" }}
             onClick={handleSubmit}
           >

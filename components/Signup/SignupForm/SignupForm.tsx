@@ -1,5 +1,5 @@
 import styles from "./SignupForm.module.scss";
-import { Input, Spacer, Card, Text, Button } from "@nextui-org/react";
+import { Input, Spacer, Card, Text, Button, Loading } from "@nextui-org/react";
 import {
   BiLockAlt,
   BiEnvelope,
@@ -8,6 +8,10 @@ import {
   BiRightArrowAlt,
   BiLeftArrowAlt,
 } from "react-icons/bi";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 interface Props {
   accountInfo: any;
@@ -16,13 +20,73 @@ interface Props {
 }
 
 export const SignupForm = (props: Props) => {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [credentials, setCredentials] = useState<string>();
+  const [error, setError] = useState<boolean>(false);
+
+  const onSubmit = async (data: any): Promise<void> => {
+    setIsLoading(true);
+    let response: any;
+    if (props.accountInfo.plan === "personal") {
+      response = await axios.post("/api/signup/personal-free-signup", data);
+    } else {
+      response = await axios.post("/api/signup/teams-free-signup", data);
+    }
+
+    // check response
+    switch (response.data) {
+      case "success":
+        router.push({ pathname: "/login", query: { newAccount: true } });
+        break;
+      case "email":
+        setIsLoading(false);
+        setCredentials("email");
+        break;
+      case "username":
+        setIsLoading(false);
+        setCredentials("username");
+        break;
+      case "error":
+        setIsLoading(false);
+        setError(true);
+        break;
+    }
+  };
+
+  const nextStep = async (data: any): Promise<void> => {
+    const { firstName, lastName, email, username, teamName, password } = data;
+    await props.setAccountInfo({
+      plan: props.accountInfo.plan,
+      tier: props.accountInfo.tier,
+      firstName,
+      lastName,
+      email,
+      username,
+      teamName,
+      password,
+    });
+    props.setStep(3);
+  };
+
+  const handleSubmission = (data: any) => {
+    if (props.accountInfo.tier === "free") {
+      onSubmit(data);
+    } else {
+      nextStep(data);
+    }
+  };
+
   return (
     <div className={`${styles.container} ${styles.fade}`}>
       <Card css={{ px: "$8", py: "$4" }} isHoverable>
-        {/* <Card.Header css={{ padding: "$4" }}>
-          <Text h3>Your selected plan</Text>
-        </Card.Header>
-        <Divider /> */}
         <Card.Body css={{ padding: "$4", py: "$8" }}>
           <div className={styles.cardFlexContainer}>
             <div>
@@ -73,76 +137,235 @@ export const SignupForm = (props: Props) => {
       <Spacer />
       <Text h5>Account information</Text>
       <Spacer />
-      <form>
+      <form onSubmit={handleSubmit(handleSubmission)}>
         <div className={styles.nameContainer}>
-          <Input
-            placeholder="First name"
-            fullWidth
-            bordered
-            size="md"
-            type="text"
-            aria-label="First name"
-          />
+          <div style={{ position: "relative", width: "100%" }}>
+            <Input
+              placeholder="First name"
+              fullWidth
+              bordered={!errors.firstName}
+              status={errors.firstName && "error"}
+              size="md"
+              type="text"
+              aria-label="First name"
+              {...register("firstName", { required: true })}
+            />
+            <Text
+              color="error"
+              css={{
+                position: "absolute",
+                marginTop: 1,
+                opacity: errors.firstName ? 1 : 0,
+                transition: "300ms",
+                pointerEvents: "none",
+              }}
+              weight="semibold"
+              size={12}
+            >
+              * Please enter your first name
+            </Text>
+          </div>
           <Spacer />
-          <Input
-            placeholder="Last name"
-            fullWidth
-            bordered
-            size="md"
-            type="text"
-            aria-label="Last name"
-            // status="error"
-          />
+          <div style={{ width: "100%", position: "relative" }}>
+            <Input
+              placeholder="Last name"
+              fullWidth
+              bordered={!errors.lastName}
+              status={errors.lastName && "error"}
+              size="md"
+              type="text"
+              aria-label="Last name"
+              {...register("lastName", { required: true })}
+            />
+            <Text
+              color="error"
+              css={{
+                position: "absolute",
+                marginTop: 1,
+                opacity: errors.lastName ? 1 : 0,
+                transition: "300ms",
+                pointerEvents: "none",
+              }}
+              weight="semibold"
+              size={12}
+            >
+              * Please enter your last name
+            </Text>
+          </div>
         </div>
-        <Spacer />
+        <Spacer y={1.3} />
         <Input
           placeholder="Email"
           fullWidth
-          bordered
+          bordered={!errors.email || credentials === "email"}
+          status={errors.email || credentials === "email" ? "error" : "default"}
           size="md"
           type="email"
           aria-label="Email"
           contentLeft={<BiEnvelope />}
+          {...register("email", {
+            required: true,
+          })}
         />
-        <Spacer />
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: errors.email ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Please enter your email
+        </Text>
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: credentials === "email" ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Email is already in use
+        </Text>
+        <Spacer y={1.3} />
         <Input
           placeholder="Username"
           fullWidth
-          bordered
+          bordered={!errors.username || credentials === "username"}
+          status={
+            errors.username || credentials === "username" ? "error" : "default"
+          }
           size="md"
           type="text"
           aria-label="Username"
           contentLeft={<BiUser />}
+          {...register("username", { required: true })}
         />
-        <Spacer />
-        <Input
-          placeholder="Team name"
-          fullWidth
-          bordered
-          size="md"
-          type="text"
-          aria-label="Team name"
-          contentLeft={<BiGroup />}
-        />
-        <Spacer />
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: errors.username ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Please enter a username
+        </Text>
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: credentials === "username" ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Username is already in use
+        </Text>
+        <Spacer y={1.3} />
+        {props.accountInfo.plan === "teams" && (
+          <>
+            <Input
+              placeholder="Team name"
+              fullWidth
+              bordered={!errors.teamName}
+              status={errors.teamName && "error"}
+              size="md"
+              type="text"
+              aria-label="Team name"
+              contentLeft={<BiGroup />}
+              {...register("teamName", { required: true })}
+            />
+            <Text
+              color="error"
+              css={{
+                position: "absolute",
+                marginTop: 1,
+                opacity: errors.teamName ? 1 : 0,
+                transition: "300ms",
+                pointerEvents: "none",
+              }}
+              weight="semibold"
+              size={12}
+            >
+              * Please enter a team name
+            </Text>
+            <Spacer y={1.3} />
+          </>
+        )}
+
         <Input.Password
           placeholder="Password"
           fullWidth
-          bordered
+          bordered={!errors.password}
+          status={errors.password && "error"}
           size="md"
           aria-label="Password"
           contentLeft={<BiLockAlt />}
+          {...register("password", { required: true, minLength: 8 })}
         />
-        <Spacer />
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: errors.password?.type === "minLength" ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Password must be 8 characters
+        </Text>
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: errors.password?.type === "required" ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Please enter a password
+        </Text>
+        <Spacer y={1.3} />
         <Button
           css={{ width: "100%" }}
+          disabled={isLoading}
+          type="submit"
+          // size="lg"
+          shadow
+          color={props.accountInfo.tier === "free" ? "gradient" : "primary"}
           iconRight={
             props.accountInfo.tier === "pro" && <BiRightArrowAlt size={18} />
           }
         >
-          {props.accountInfo.tier === "pro"
-            ? "Continue to payment"
-            : "Create account"}
+          {isLoading ? (
+            <Loading size="sm" />
+          ) : props.accountInfo.tier === "pro" ? (
+            "Continue to payment"
+          ) : (
+            "Create account"
+          )}
         </Button>
       </form>
     </div>

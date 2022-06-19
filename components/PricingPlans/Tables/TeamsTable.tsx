@@ -377,6 +377,29 @@ export const TeamsTable = () => {
               <BiCheck size={18} color="#17C964" />
             </Table.Cell>
           </Table.Row>
+          <Table.Row>
+            <Table.Cell css={{ fontSize: 14, fontWeight: "$semibold" }}>
+              Team to team collab
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiX size={18} color="#F31260" />
+            </Table.Cell>
+            <Table.Cell
+              css={{
+                fontSize: 14,
+                fontWeight: "$semibold",
+                color: "$accents8",
+              }}
+            >
+              <BiCheck size={18} color="#17C964" />
+            </Table.Cell>
+          </Table.Row>
         </Table.Body>
       </Table>
     </div>

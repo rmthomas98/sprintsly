@@ -8,8 +8,6 @@ export const SignupContainer = () => {
   const [step, setStep] = useState<number>(1);
   const [accountInfo, setAccountInfo] = useState<any>();
 
-  console.log(step, accountInfo);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -27,7 +25,12 @@ export const SignupContainer = () => {
         </Text>
         <Spacer />
         {step === 1 && (
-          <PlanSelect setAccountInfo={setAccountInfo} setStep={setStep} />
+          <PlanSelect
+            setAccountInfo={setAccountInfo}
+            accountInfo={accountInfo}
+            setStep={setStep}
+            step={step}
+          />
         )}
         {step === 2 && (
           <SignupForm

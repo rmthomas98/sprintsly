@@ -1,5 +1,6 @@
 import { Row, Button, Card, Text, Divider, Spacer } from "@nextui-org/react";
 import { BiMeteor } from "react-icons/bi";
+import Link from "next/link";
 
 export const TeamsCards = () => {
   return (
@@ -150,17 +151,21 @@ export const TeamsCards = () => {
             Live chat
           </Text>
         </Row>
-        <Button
-          css={{
-            position: "absolute",
-            bottom: 16,
-            left: 16,
-            right: 16,
-          }}
-          flat
+        <Link
+          href={{ pathname: "/signup", query: { plan: "teams", tier: "free" } }}
         >
-          Select plan
-        </Button>
+          <Button
+            css={{
+              position: "absolute",
+              bottom: 16,
+              left: 16,
+              right: 16,
+            }}
+            flat
+          >
+            Select plan
+          </Button>
+        </Link>
       </Card>
       <Spacer />
       <Card
@@ -360,18 +365,32 @@ export const TeamsCards = () => {
             Live video/voice chat
           </Text>
         </Row>
-
-        <Button
-          css={{
-            position: "absolute",
-            bottom: 16,
-            left: 16,
-            right: 16,
-          }}
-          color="gradient"
+        <Row align="center">
+          <BiMeteor color="#FF2EC4" style={{ marginRight: 8 }} />
+          <Text
+            weight="bold"
+            color="#787F85"
+            size={14}
+            css={{ letterSpacing: "$wide" }}
+          >
+            Team to team collaboration
+          </Text>
+        </Row>
+        <Link
+          href={{ pathname: "/signup", query: { plan: "teams", tier: "pro" } }}
         >
-          Select plan
-        </Button>
+          <Button
+            css={{
+              position: "absolute",
+              bottom: 16,
+              left: 16,
+              right: 16,
+            }}
+            color="gradient"
+          >
+            Select plan
+          </Button>
+        </Link>
       </Card>
     </>
   );

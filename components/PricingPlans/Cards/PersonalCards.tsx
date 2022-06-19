@@ -112,17 +112,24 @@ export const PersonalCards = () => {
             Calendar view
           </Text>
         </Row>
-        <Button
-          css={{
-            position: "absolute",
-            bottom: 16,
-            left: 16,
-            right: 16,
+        <Link
+          href={{
+            pathname: "/signup",
+            query: { plan: "personal", tier: "free" },
           }}
-          flat
         >
-          Select plan
-        </Button>
+          <Button
+            css={{
+              position: "absolute",
+              bottom: 16,
+              left: 16,
+              right: 16,
+            }}
+            flat
+          >
+            Select plan
+          </Button>
+        </Link>
       </Card>
       <Spacer />
       <Card
@@ -267,7 +274,12 @@ export const PersonalCards = () => {
             Client guest access
           </Text>
         </Row>
-        <Link href="/signup">
+        <Link
+          href={{
+            pathname: "/signup",
+            query: { plan: "personal", tier: "pro" },
+          }}
+        >
           <Button
             css={{
               position: "absolute",

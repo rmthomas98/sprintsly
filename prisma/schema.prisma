@@ -26,10 +26,10 @@ model User {
   username     String        @unique
   password     String
   role         Role
-  Customer     Customer?
-  Subscription Subscription?
-  Card         Card?
-  Team         Team?         @relation(fields: [teamId], references: [id])
+  customer     Customer?
+  subscription Subscription?
+  card         Card?
+  team         Team?         @relation(fields: [teamId], references: [id])
   teamId       Int?
   branches     Branch[]
   projects     Project[]
@@ -39,13 +39,19 @@ model User {
   events       Event[]
 }
 
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+}
+
 model Customer {
-  id            Int    @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
   customerId    String
-  paymentMethod String
-  paymentStatus String
-  user          User   @relation(fields: [userId], references: [id])
-  userId        Int    @unique
+  paymentMethod String?
+  paymentStatus PaymentStatus
+  invoices      Invoice[]
+  user          User          @relation(fields: [userId], references: [id])
+  userId        Int           @unique
 }
 
 enum Type {
@@ -64,8 +70,18 @@ model Subscription {
   type              Type
   tier              Tier
   cancelAtPeriodEnd Boolean @default(false)
+  currentInvoice    String?
+  nextInoivce       String?
   user              User    @relation(fields: [userId], references: [id])
   userId            Int     @unique
+}
+
+model Invoice {
+  id         Int       @id @default(autoincrement())
+  date       String
+  amount     String
+  Customer   Customer? @relation(fields: [customerId], references: [id])
+  customerId Int?
 }
 
 model Card {

@@ -1,0 +1,25 @@
+.wrapper {
+  padding: 16px;
+  padding-bottom: 50px;
+
+  .container {
+    max-width: 400px;
+    margin: auto;
+
+    .flexContainer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2px;
+    }
+
+    .imageContainer {
+      display: flex;
+      justify-content: center;
+
+      .birdImage {
+        filter: hue-rotate(200deg);
+      }
+    }
+  }
+}
