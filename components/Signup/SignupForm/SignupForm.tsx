@@ -269,14 +269,14 @@ export const SignupForm = (props: Props) => {
           type="text"
           aria-label="Username"
           contentLeft={<BiUser />}
-          {...register("username", { required: true })}
+          {...register("username", { required: true, maxLength: 20 })}
         />
         <Text
           color="error"
           css={{
             position: "absolute",
             marginTop: 1,
-            opacity: errors.username ? 1 : 0,
+            opacity: errors.username?.type === "required" ? 1 : 0,
             transition: "300ms",
             pointerEvents: "none",
           }}
@@ -299,6 +299,20 @@ export const SignupForm = (props: Props) => {
         >
           * Username is already in use
         </Text>
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: errors.username?.type === "maxLength" ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Username must be 20 characters or less
+        </Text>
         <Spacer y={1.3} />
         {props.accountInfo.plan === "teams" && (
           <>
@@ -311,14 +325,14 @@ export const SignupForm = (props: Props) => {
               type="text"
               aria-label="Team name"
               contentLeft={<BiGroup />}
-              {...register("teamName", { required: true })}
+              {...register("teamName", { required: true, maxLength: 20 })}
             />
             <Text
               color="error"
               css={{
                 position: "absolute",
                 marginTop: 1,
-                opacity: errors.teamName ? 1 : 0,
+                opacity: errors.teamName?.type === "required" ? 1 : 0,
                 transition: "300ms",
                 pointerEvents: "none",
               }}
@@ -326,6 +340,20 @@ export const SignupForm = (props: Props) => {
               size={12}
             >
               * Please enter a team name
+            </Text>
+            <Text
+              color="error"
+              css={{
+                position: "absolute",
+                marginTop: 1,
+                opacity: errors.teamName?.type === "maxLength" ? 1 : 0,
+                transition: "300ms",
+                pointerEvents: "none",
+              }}
+              weight="semibold"
+              size={12}
+            >
+              * Team name must be 20 characters or less
             </Text>
             <Spacer y={1.3} />
           </>

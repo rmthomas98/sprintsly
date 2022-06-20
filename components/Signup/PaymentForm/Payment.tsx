@@ -61,7 +61,7 @@ export const Payment = (props: Props) => {
 
     const response = await axios.post(
       `/api/signup/${
-        props.accountInfo.plan === "teams" ? "team-signup" : "personal-signup"
+        props.accountInfo.plan === "teams" ? "teams-signup" : "personal-signup"
       }`,
       { setupIntent, accountInfo: props.accountInfo }
     );
