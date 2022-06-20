@@ -3,6 +3,8 @@ import { SignupForm } from "../SignupForm/SignupForm";
 import { PlanSelect } from "../PlanSelect/PlanSelect";
 import { Spacer, Text } from "@nextui-org/react";
 import { useState } from "react";
+import { Provider } from "../PaymentForm/Provider";
+import { Toaster } from "react-hot-toast";
 
 export const SignupContainer = () => {
   const [step, setStep] = useState<number>(1);
@@ -10,6 +12,7 @@ export const SignupContainer = () => {
 
   return (
     <div className={styles.wrapper}>
+      <Toaster />
       <div className={styles.container}>
         <Text h2 className={`${styles.header} ${styles.fade}`}>
           Get started with{" "}
@@ -38,6 +41,9 @@ export const SignupContainer = () => {
             accountInfo={accountInfo}
             setAccountInfo={setAccountInfo}
           />
+        )}
+        {step === 3 && (
+          <Provider accountInfo={accountInfo} setAccountInfo={setAccountInfo} />
         )}
       </div>
     </div>

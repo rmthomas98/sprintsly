@@ -17,26 +17,29 @@ enum Role {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  firstName    String
-  lastName     String
-  email        String        @unique
-  username     String        @unique
-  password     String
-  role         Role
-  customer     Customer?
-  subscription Subscription?
-  card         Card?
-  team         Team?         @relation(fields: [teamId], references: [id])
-  teamId       Int?
-  branches     Branch[]
-  projects     Project[]
-  sprints      Sprint[]
-  tasks        Task[]
-  files        File[]
-  events       Event[]
+  id               Int           @id @default(autoincrement())
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  firstName        String
+  lastName         String
+  email            String        @unique
+  username         String        @unique
+  password         String
+  avatar           String?
+  emailVerified    Boolean       @default(false)
+  verificationCode String
+  role             Role
+  customer         Customer?
+  subscription     Subscription?
+  card             Card?
+  team             Team?         @relation(fields: [teamId], references: [id])
+  teamId           Int?
+  branches         Branch[]
+  projects         Project[]
+  sprints          Sprint[]
+  tasks            Task[]
+  files            File[]
+  events           Event[]
 }
 
 enum PaymentStatus {
@@ -67,11 +70,13 @@ enum Tier {
 model Subscription {
   id                Int     @id @default(autoincrement())
   subscriptionId    String?
+  subscriptionItem  String?
   type              Type
   tier              Tier
+  quantity          Int     @default(1)
   cancelAtPeriodEnd Boolean @default(false)
   currentInvoice    String?
-  nextInoivce       String?
+  nextInvoice       String?
   user              User    @relation(fields: [userId], references: [id])
   userId            Int     @unique
 }
@@ -88,8 +93,8 @@ model Card {
   id     Int    @id @default(autoincrement())
   brand  String
   last4  String
-  month  String
-  year   String
+  month  Int
+  year   Int
   user   User   @relation(fields: [userId], references: [id])
   userId Int    @unique
 }

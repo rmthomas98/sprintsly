@@ -44,7 +44,10 @@ export const SignupForm = (props: Props) => {
     // check response
     switch (response.data) {
       case "success":
-        router.push({ pathname: "/login", query: { newAccount: true } });
+        router.push({
+          pathname: "/verify-email",
+          query: { email: data.email },
+        });
         break;
       case "email":
         setIsLoading(false);
@@ -62,18 +65,37 @@ export const SignupForm = (props: Props) => {
   };
 
   const nextStep = async (data: any): Promise<void> => {
+    setIsLoading(true);
     const { firstName, lastName, email, username, teamName, password } = data;
-    await props.setAccountInfo({
-      plan: props.accountInfo.plan,
-      tier: props.accountInfo.tier,
-      firstName,
-      lastName,
+    const response = await axios.post("/api/signup/check", {
       email,
       username,
-      teamName,
-      password,
     });
-    props.setStep(3);
+
+    switch (response.data) {
+      case "clear":
+        props.setAccountInfo({
+          plan: props.accountInfo.plan,
+          tier: props.accountInfo.tier,
+          firstName,
+          lastName,
+          email,
+          username,
+          teamName,
+          password,
+        });
+        setIsLoading(false);
+        props.setStep(3);
+        break;
+      case "email":
+        setCredentials("email");
+        setIsLoading(false);
+        break;
+      case "username":
+        setCredentials("username");
+        setIsLoading(false);
+        break;
+    }
   };
 
   const handleSubmission = (data: any) => {

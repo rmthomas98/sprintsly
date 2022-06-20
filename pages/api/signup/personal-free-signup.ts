@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 const bcrypt = require("bcryptjs");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const crypto = require("crypto");
 
 interface Account {
   firstName: string;
@@ -47,6 +48,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
         username: username.trim(),
         password: bcrypt.hashSync(password),
         role: "ADMIN",
+        verificationCode: crypto
+          .randomBytes(6)
+          .toString("base64")
+          .toUpperCase(),
       },
     });
 

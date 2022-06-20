@@ -103,7 +103,7 @@ export const Nav = () => {
           <div className={styles.linkContainer}>
             <Tooltip
               offset={20}
-              css={{ zIndex: 9999 }}
+              css={{ zIndex: 9999, pointerEvents: "none" }}
               content={"LinkedIn"}
               placement="bottom"
               color="invert"
@@ -116,7 +116,7 @@ export const Nav = () => {
             <Spacer x={0.4} />
             <Tooltip
               offset={20}
-              css={{ zIndex: 9999 }}
+              css={{ zIndex: 9999, pointerEvents: "none" }}
               content={"Youtube"}
               placement="bottom"
               color="invert"
@@ -129,7 +129,7 @@ export const Nav = () => {
             <Spacer x={0.4} />
             <Tooltip
               offset={20}
-              css={{ zIndex: 9999 }}
+              css={{ zIndex: 9999, pointerEvents: "none" }}
               content={"Twitter"}
               placement="bottom"
               color="invert"
@@ -142,7 +142,7 @@ export const Nav = () => {
             <Spacer x={0.4} />
             <Tooltip
               offset={20}
-              css={{ zIndex: 9999 }}
+              css={{ zIndex: 9999, pointerEvents: "none" }}
               content={isDark ? "Light mode" : "Dark mode"}
               placement="bottom"
               color="invert"
