@@ -21,7 +21,7 @@ export const PricingPlans = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${styles.fade}`}>
       <div className={styles.container}>
         <Text h1 className={styles.header}>
           Choose the right plan for{" "}
@@ -66,9 +66,16 @@ export const PricingPlans = () => {
           </Button.Group>
         </Row>
         <Spacer y={2} />
-        <div className={styles.flexContainer}>
-          {plans === "personal" ? <PersonalCards /> : <TeamsCards />}
-        </div>
+        {plans === "personal" && (
+          <div className={`${styles.flexContainer} ${styles.fade}`}>
+            <PersonalCards />
+          </div>
+        )}
+        {plans === "teams" && (
+          <div className={`${styles.flexContainer} ${styles.fade}`}>
+            <TeamsCards />
+          </div>
+        )}
         <Spacer y={4} />
         {plans === "personal" ? <PersonalTable /> : <TeamsTable />}
         <Spacer y={4} />

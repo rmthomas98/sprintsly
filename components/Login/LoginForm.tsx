@@ -1,12 +1,16 @@
 import styles from "./LoginForm.module.scss";
 import Image from "next/image";
 import { Text, Input, Button, Checkbox, Spacer, Link } from "@nextui-org/react";
-import { BiUser, BiLockAlt, BiLockOpenAlt } from "react-icons/bi";
+import { BiUser, BiLockAlt, BiEnvelope } from "react-icons/bi";
 import NextLink from "next/link";
+import { signIn, useSession } from "next-auth/react";
 
 export const LoginForm = () => {
+  const { data } = useSession();
+
+  console.log(data);
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${styles.fade}`}>
       <div className={styles.container}>
         <div className={styles.imageContainer}>
           <Image
@@ -23,12 +27,13 @@ export const LoginForm = () => {
         </Text>
         <Spacer />
         <Input
-          contentLeft={<BiUser />}
+          contentLeft={<BiEnvelope />}
           color="primary"
           bordered
           size="lg"
           fullWidth
-          placeholder="Email or username"
+          type="email"
+          placeholder="Email"
         />
         <Spacer />
         <Input.Password
@@ -37,6 +42,7 @@ export const LoginForm = () => {
           bordered
           size="lg"
           fullWidth
+          type="password"
           placeholder="Password"
         />
         <Spacer />
@@ -49,7 +55,13 @@ export const LoginForm = () => {
           </NextLink>
         </div>
         <Spacer />
-        <Button shadow css={{ width: "100%" }} size="lg" color="gradient">
+        <Button
+          onClick={() => signIn()}
+          shadow
+          css={{ width: "100%" }}
+          size="lg"
+          color="gradient"
+        >
           Log in
         </Button>
       </div>

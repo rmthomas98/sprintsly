@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -91,8 +92,39 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
-    // send response back to frontend
-    res.status(200).send("success");
+    // create email with secret code for email verification
+    const transporter = nodemailer.createTransport({
+      host: "smtppro.zoho.com",
+      port: 587,
+      secure: false,
+      auth: {
+        user: "support@sprintsly.io",
+        pass: process.env.ZOHO_PASSWORD,
+      },
+    });
+
+    const msg = {
+      from: '"Sprintsly" <support@sprintsly.io>',
+      to: email,
+      subject: "Verify Your Email",
+      html: `<html>
+        <body>
+          <p style="font-size: 14px; margin-bottom: 10px;">Dear valued Sprintsly user,</p>
+          <p style="font-size: 14px;">You are one step away from setting up your account and using our services! Copy the secret code below and enter it to verify your email.</p>
+          <p style="margin-top: 10px; font-size: 30px;">${secretCode}</p>
+          <p style="margin-top: 10px; font-size: 14px">Regards,</p>
+          <p style="margin-top: 5px; font-size: 14px">The Sprintsly Team</p>
+        </body>
+      </html>`,
+    };
+
+    // attempt to send email
+    try {
+      await transporter.sendMail(msg);
+      res.status(200).json("success");
+    } catch {
+      res.status(200).json("error");
+    }
   } catch {
     res.status(500).send("error");
   }

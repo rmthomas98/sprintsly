@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { Nav } from "../components/Nav/Nav";
 import { createTheme, NextUIProvider, globalCss } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { SessionProvider } from "next-auth/react";
 
 const globalStyles = globalCss({
   html: {
@@ -34,22 +35,25 @@ export const darkTheme = createTheme({
   },
 });
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+const MyApp = ({ Component, pageProps }: AppProps, session: any) => {
   globalStyles();
+  console.log(session);
 
   return (
     <>
-      <NextThemesProvider
-        attribute="class"
-        enableSystem={false}
-        defaultTheme="light"
-        value={{ light: lightTheme.className, dark: darkTheme.className }}
-      >
-        <NextUIProvider>
-          <Nav />
-          <Component {...pageProps} />
-        </NextUIProvider>
-      </NextThemesProvider>
+      <SessionProvider session={session}>
+        <NextThemesProvider
+          attribute="class"
+          enableSystem={false}
+          defaultTheme="light"
+          value={{ light: lightTheme.className, dark: darkTheme.className }}
+        >
+          <NextUIProvider>
+            <Nav />
+            <Component {...pageProps} />
+          </NextUIProvider>
+        </NextThemesProvider>
+      </SessionProvider>
     </>
   );
 };

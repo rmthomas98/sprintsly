@@ -11,7 +11,7 @@ export const SignupContainer = () => {
   const [accountInfo, setAccountInfo] = useState<any>();
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper}`}>
       <Toaster />
       <div className={styles.container}>
         <Text h2 className={`${styles.header} ${styles.fade}`}>

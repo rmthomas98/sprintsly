@@ -1,5 +1,13 @@
 import styles from "./SignupForm.module.scss";
-import { Input, Spacer, Card, Text, Button, Loading } from "@nextui-org/react";
+import {
+  Input,
+  Spacer,
+  Card,
+  Text,
+  Button,
+  Loading,
+  Tooltip,
+} from "@nextui-org/react";
 import {
   BiLockAlt,
   BiEnvelope,
@@ -10,7 +18,7 @@ import {
 } from "react-icons/bi";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 interface Props {
@@ -24,6 +32,7 @@ export const SignupForm = (props: Props) => {
     handleSubmit,
     register,
     formState: { errors },
+    watch,
   } = useForm();
 
   const router = useRouter();
@@ -31,8 +40,12 @@ export const SignupForm = (props: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [credentials, setCredentials] = useState<string>();
   const [error, setError] = useState<boolean>(false);
+  const [usernameError, setUsernameError] = useState<boolean>(false);
+  const [teamNameError, setTeamNameError] = useState<boolean>(false);
 
   const onSubmit = async (data: any): Promise<void> => {
+    if (data.username.includes(" ")) return;
+    if (data.teamName?.includes(" ")) return;
     setIsLoading(true);
     let response: any;
     if (props.accountInfo.plan === "personal") {
@@ -65,6 +78,8 @@ export const SignupForm = (props: Props) => {
   };
 
   const nextStep = async (data: any): Promise<void> => {
+    if (data.username.includes(" ")) return;
+    if (data.teamName?.includes(" ")) return;
     setIsLoading(true);
     const { firstName, lastName, email, username, teamName, password } = data;
     const response = await axios.post("/api/signup/check", {
@@ -105,6 +120,19 @@ export const SignupForm = (props: Props) => {
       nextStep(data);
     }
   };
+
+  useEffect(() => {
+    if (watch("username").includes(" ") && watch("username").length > 0) {
+      setUsernameError(true);
+    } else {
+      setUsernameError(false);
+    }
+    if (watch("teamName")?.includes(" ") && watch("teamName")?.length > 0) {
+      setTeamNameError(true);
+    } else {
+      setTeamNameError(false);
+    }
+  }, [watch("username"), watch("teamName")]);
 
   return (
     <div className={`${styles.container} ${styles.fade}`}>
@@ -313,6 +341,20 @@ export const SignupForm = (props: Props) => {
         >
           * Username must be 20 characters or less
         </Text>
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: usernameError ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Username can&#39;t contain spaces
+        </Text>
         <Spacer y={1.3} />
         {props.accountInfo.plan === "teams" && (
           <>
@@ -327,6 +369,7 @@ export const SignupForm = (props: Props) => {
               contentLeft={<BiGroup />}
               {...register("teamName", { required: true, maxLength: 20 })}
             />
+
             <Text
               color="error"
               css={{
@@ -354,6 +397,20 @@ export const SignupForm = (props: Props) => {
               size={12}
             >
               * Team name must be 20 characters or less
+            </Text>
+            <Text
+              color="error"
+              css={{
+                position: "absolute",
+                marginTop: 1,
+                opacity: teamNameError ? 1 : 0,
+                transition: "300ms",
+                pointerEvents: "none",
+              }}
+              weight="semibold"
+              size={12}
+            >
+              * Team name can&#39;t contain spaces
             </Text>
             <Spacer y={1.3} />
           </>

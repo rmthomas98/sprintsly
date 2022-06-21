@@ -7,18 +7,18 @@ import { useEffect } from "react";
 
 const Login = ({ newAccount }: any) => {
   const { isDark } = useTheme();
-  console.log(newAccount);
+
+  const toastStyle: any = {
+    background: isDark ? "#ECEDEE" : "#16181A",
+    color: isDark ? "#16181A" : "#ECEDEE",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: 500,
+  };
 
   const accountCreated = () =>
     toast.success("Your account has been created. You can now login below.", {
-      duration: 10000,
-      style: {
-        background: isDark ? "#ECEDEE" : "#16181A",
-        color: isDark ? "#16181A" : "#ECEDEE",
-        textAlign: "center",
-        fontSize: 14,
-        fontWeight: 500,
-      },
+      style: toastStyle,
     });
 
   useEffect(() => {
