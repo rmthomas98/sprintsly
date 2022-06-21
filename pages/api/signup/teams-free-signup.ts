@@ -44,6 +44,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
       },
     });
 
+    // generate secret code
+    const secretCode = crypto.randomBytes(6).toString("base64").toUpperCase();
+
     // create user in postgres
     const user = await prisma.user.create({
       data: {
@@ -52,12 +55,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
         email: email.trim(),
         username: username.trim(),
         password: bcrypt.hashSync(password),
-        role: "ADMIN",
+        role: "SUPERADMIN",
         teamId: team.id,
-        verificationCode: crypto
-          .randomBytes(6)
-          .toString("base64")
-          .toUpperCase(),
+        verificationCode: secretCode,
       },
     });
 

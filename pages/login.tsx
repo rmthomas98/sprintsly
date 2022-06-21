@@ -5,11 +5,11 @@ import { useTheme } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 
-const Login = () => {
-  const router = useRouter();
+const Login = ({ newAccount }: any) => {
   const { isDark } = useTheme();
+  console.log(newAccount);
 
-  const newAccount = () =>
+  const accountCreated = () =>
     toast.success("Your account has been created. You can now login below.", {
       duration: 10000,
       style: {
@@ -22,7 +22,7 @@ const Login = () => {
     });
 
   useEffect(() => {
-    if (router.query.newAccount) newAccount();
+    if (newAccount) accountCreated();
   }, []);
 
   return (
@@ -34,6 +34,11 @@ const Login = () => {
       <LoginForm />
     </>
   );
+};
+
+Login.getInitialProps = ({ query }: any) => {
+  const { newAccount } = query;
+  return { newAccount };
 };
 
 export default Login;

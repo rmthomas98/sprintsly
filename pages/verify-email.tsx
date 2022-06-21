@@ -1,5 +1,8 @@
 import { VerifyEmailForm } from "../components/VerifyEmail/VerifyEmailForm";
 import Head from "next/head";
+import { useForm } from "react-hook-form";
+import { setMaxListeners } from "events";
+import { useState } from "react";
 
 const VerifyEmail = ({ email }: any) => {
   return (

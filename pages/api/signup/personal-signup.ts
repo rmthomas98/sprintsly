@@ -43,6 +43,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       items: [{ price: "price_1LCXUWA7aOT5A0f28gNvy0Kd" }],
     });
 
+    // generate secret code
+    const secretCode = crypto.randomBytes(6).toString("base64").toUpperCase();
+
     // create user in db
     const user = await prisma.user.create({
       data: {
@@ -51,11 +54,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         email: email.trim(),
         username: username.trim(),
         password: bcrypt.hashSync(password),
-        role: "ADMIN",
-        verificationCode: crypto
-          .randomBytes(6)
-          .toString("base64")
-          .toUpperCase(),
+        role: "SUPERADMIN",
+        verificationCode: secretCode,
       },
     });
 
