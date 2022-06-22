@@ -11,8 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient();
 
     // get data from frontend
-    const { firstName, lastName, email, username, teamName, password } =
-      req.body.accountInfo;
+    const { name, email, username, teamName, password } = req.body.accountInfo;
     const paymentMethodId = req.body.setupIntent.setupIntent.payment_method;
 
     // get payment method object from stripe
@@ -22,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // create customer in stripe
     const customer = await stripe.customers.create({
-      name: `${firstName.trim()} ${lastName.trim()}`,
+      name: name.trim(),
       email: email.trim(),
     });
 
@@ -56,8 +55,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const user = await prisma.user.create({
       data: {
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
+        name: name.trim(),
         email: email.trim(),
         username: username.trim(),
         password: bcrypt.hashSync(password),
@@ -113,7 +111,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       subject: "Verify Your Email",
       html: `<html>
         <body>
-          <p style="font-size: 14px; margin-bottom: 10px;">Dear valued Sprintsly user,</p>
+          <p style="font-size: 14px; margin-bottom: 10px;">Dear ${name.trim()},</p>
           <p style="font-size: 14px;">You are one step away from setting up your account and using our services! Copy the secret code below and enter it to verify your email.</p>
           <p style="margin-top: 10px; font-size: 30px;">${secretCode}</p>
           <p style="margin-top: 10px; font-size: 14px">Regards,</p>

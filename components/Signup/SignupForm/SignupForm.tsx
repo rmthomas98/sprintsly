@@ -15,7 +15,9 @@ import {
   BiGroup,
   BiRightArrowAlt,
   BiLeftArrowAlt,
+  BiUserCheck,
 } from "react-icons/bi";
+import { BsFillInfoCircleFill } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -92,8 +94,7 @@ export const SignupForm = (props: Props) => {
         props.setAccountInfo({
           plan: props.accountInfo.plan,
           tier: props.accountInfo.tier,
-          firstName,
-          lastName,
+          name,
           email,
           username,
           teamName,
@@ -188,61 +189,31 @@ export const SignupForm = (props: Props) => {
       <Text h5>Account information</Text>
       <Spacer />
       <form onSubmit={handleSubmit(handleSubmission)}>
-        <div className={styles.nameContainer}>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Input
-              placeholder="First name"
-              fullWidth
-              bordered={!errors.firstName}
-              status={errors.firstName && "error"}
-              size="md"
-              type="text"
-              aria-label="First name"
-              {...register("firstName", { required: true })}
-            />
-            <Text
-              color="error"
-              css={{
-                position: "absolute",
-                marginTop: 1,
-                opacity: errors.firstName ? 1 : 0,
-                transition: "300ms",
-                pointerEvents: "none",
-              }}
-              weight="semibold"
-              size={12}
-            >
-              * Please enter your first name
-            </Text>
-          </div>
-          <Spacer />
-          <div style={{ width: "100%", position: "relative" }}>
-            <Input
-              placeholder="Last name"
-              fullWidth
-              bordered={!errors.lastName}
-              status={errors.lastName && "error"}
-              size="md"
-              type="text"
-              aria-label="Last name"
-              {...register("lastName", { required: true })}
-            />
-            <Text
-              color="error"
-              css={{
-                position: "absolute",
-                marginTop: 1,
-                opacity: errors.lastName ? 1 : 0,
-                transition: "300ms",
-                pointerEvents: "none",
-              }}
-              weight="semibold"
-              size={12}
-            >
-              * Please enter your last name
-            </Text>
-          </div>
-        </div>
+        <Input
+          placeholder="Name"
+          fullWidth
+          bordered={!errors.name}
+          status={errors.name && "error"}
+          contentLeft={<BiUser />}
+          size="md"
+          type="text"
+          aria-label="name"
+          {...register("name", { required: true })}
+        />
+        <Text
+          color="error"
+          css={{
+            position: "absolute",
+            marginTop: 1,
+            opacity: errors.name ? 1 : 0,
+            transition: "300ms",
+            pointerEvents: "none",
+          }}
+          weight="semibold"
+          size={12}
+        >
+          * Please enter your name
+        </Text>
         <Spacer y={1.3} />
         <Input
           placeholder="Email"
@@ -296,7 +267,7 @@ export const SignupForm = (props: Props) => {
           size="md"
           type="text"
           aria-label="Username"
-          contentLeft={<BiUser />}
+          contentLeft={<BiUserCheck />}
           {...register("username", { required: true, maxLength: 20 })}
         />
         <Text

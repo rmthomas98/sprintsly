@@ -50,8 +50,9 @@ export const LoginForm = () => {
       toast.error(response.error, { id: loadingToast, style: toastStyle });
       return;
     }
-    console.log(session);
-    // router.push("/admin");
+    setIsLoading(false);
+    toast.dismiss(loadingToast);
+    router.push("/admin");
   };
 
   return (
@@ -80,12 +81,14 @@ export const LoginForm = () => {
             fullWidth
             type="email"
             placeholder="Email"
+            aria-label="email"
             {...register("email", { required: true })}
           />
           <Spacer />
           <Input.Password
             contentLeft={<BiLockAlt />}
             color="primary"
+            aria-label="password"
             bordered
             size="lg"
             fullWidth

@@ -5,6 +5,7 @@ import { createTheme, NextUIProvider, globalCss } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
+import { NavBar } from "./admin/Navs/NavBar/NavBar";
 
 const globalStyles = globalCss({
   html: {
@@ -52,6 +53,7 @@ const MyApp = ({ Component, pageProps }: AppProps, session: any) => {
           <NextUIProvider>
             {router.pathname.startsWith("/admin") ? (
               <>
+                <NavBar />
                 <Component {...pageProps} />
               </>
             ) : (

@@ -6,8 +6,7 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 
 interface Account {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   username: string;
   password: string;
@@ -17,8 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
   try {
     const prisma = new PrismaClient();
 
-    const { firstName, lastName, email, username, password }: Account =
-      req.body;
+    const { name, email, username, password }: Account = req.body;
 
     // check if email is taken
     const isEmailTaken = await prisma.user.findUnique({
@@ -36,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
 
     // create customer in stripe
     const stripeCustomer = await stripe.customers.create({
-      name: `${firstName.trim()} ${lastName.trim()}`,
+      name: name.trim(),
       email: email.trim(),
     });
 
@@ -46,8 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
     // create user in postgres
     const customer = await prisma.user.create({
       data: {
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
+        name: name.trim(),
         email: email.trim(),
         username: username.trim(),
         password: bcrypt.hashSync(password),
@@ -91,7 +88,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
       subject: "Verify Your Email",
       html: `<html>
         <body>
-          <p style="font-size: 14px; margin-bottom: 10px;">Dear valued Sprintsly user,</p>
+          <p style="font-size: 14px; margin-bottom: 10px;">Dear ${name.trim()},</p>
           <p style="font-size: 14px;">You are one step away from setting up your account and using our services! Copy the secret code below and enter it to verify your email.</p>
           <p style="margin-top: 10px; font-size: 30px;">${secretCode}</p>
           <p style="margin-top: 10px; font-size: 14px">Regards,</p>
