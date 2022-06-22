@@ -4,6 +4,7 @@ import { Nav } from "../components/Nav/Nav";
 import { createTheme, NextUIProvider, globalCss } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const globalStyles = globalCss({
   html: {
@@ -37,7 +38,7 @@ export const darkTheme = createTheme({
 
 const MyApp = ({ Component, pageProps }: AppProps, session: any) => {
   globalStyles();
-  console.log(session);
+  const router = useRouter();
 
   return (
     <>
@@ -49,8 +50,16 @@ const MyApp = ({ Component, pageProps }: AppProps, session: any) => {
           value={{ light: lightTheme.className, dark: darkTheme.className }}
         >
           <NextUIProvider>
-            <Nav />
-            <Component {...pageProps} />
+            {router.pathname.startsWith("/admin") ? (
+              <>
+                <Component {...pageProps} />
+              </>
+            ) : (
+              <>
+                <Nav />
+                <Component {...pageProps} />
+              </>
+            )}
           </NextUIProvider>
         </NextThemesProvider>
       </SessionProvider>

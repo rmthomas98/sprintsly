@@ -1,14 +1,59 @@
 import styles from "./LoginForm.module.scss";
 import Image from "next/image";
-import { Text, Input, Button, Checkbox, Spacer, Link } from "@nextui-org/react";
-import { BiUser, BiLockAlt, BiEnvelope } from "react-icons/bi";
+import {
+  Text,
+  Input,
+  Button,
+  Checkbox,
+  Spacer,
+  Link,
+  Loading,
+  useTheme,
+} from "@nextui-org/react";
+import { BiLockAlt, BiEnvelope } from "react-icons/bi";
 import NextLink from "next/link";
-import { signIn, useSession } from "next-auth/react";
+import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 export const LoginForm = () => {
-  const { data } = useSession();
+  const { handleSubmit, register } = useForm();
+  const { isDark } = useTheme();
+  const router = useRouter();
+  const { data: session } = useSession();
 
-  console.log(data);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const toastStyle: any = {
+    background: isDark ? "#ECEDEE" : "#16181A",
+    color: isDark ? "#16181A" : "#ECEDEE",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: 500,
+  };
+
+  const onSubmit = async (data: any): Promise<void> => {
+    setIsLoading(true);
+    const loadingToast = toast.loading("Loggin in...", { style: toastStyle });
+    const options = {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+    };
+    const response: any = await signIn("credentials", options);
+
+    if (response?.error) {
+      setIsLoading(false);
+      toast.error(response.error, { id: loadingToast, style: toastStyle });
+      return;
+    }
+    console.log(session);
+    // router.push("/admin");
+  };
+
   return (
     <div className={`${styles.wrapper} ${styles.fade}`}>
       <div className={styles.container}>
@@ -26,44 +71,69 @@ export const LoginForm = () => {
           Log in to your account
         </Text>
         <Spacer />
-        <Input
-          contentLeft={<BiEnvelope />}
-          color="primary"
-          bordered
-          size="lg"
-          fullWidth
-          type="email"
-          placeholder="Email"
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            contentLeft={<BiEnvelope />}
+            color="primary"
+            bordered
+            size="lg"
+            fullWidth
+            type="email"
+            placeholder="Email"
+            {...register("email", { required: true })}
+          />
+          <Spacer />
+          <Input.Password
+            contentLeft={<BiLockAlt />}
+            color="primary"
+            bordered
+            size="lg"
+            fullWidth
+            type="password"
+            placeholder="Password"
+            {...register("password", { required: true })}
+          />
+          <Spacer />
+          {/* <div className={styles.flexContainer}>
+            <Checkbox size="sm">
+              Remember me
+            </Checkbox>
+            <div></div>
+            <NextLink href="/">
+              <Link color="text" css={{ fontSize: 14 }}>
+                Forgot password?
+              </Link>
+            </NextLink>
+          </div> */}
+          {/* <Spacer /> */}
+          <Button
+            type="submit"
+            disabled={isLoading}
+            shadow
+            css={{ width: "100%" }}
+            size="lg"
+            color="gradient"
+          >
+            {isLoading ? <Loading size="sm" /> : "Log in"}
+          </Button>
+          {/* <Button onClick={() => signOut()} /> */}
+        </form>
         <Spacer />
-        <Input.Password
-          contentLeft={<BiLockAlt />}
-          color="primary"
-          bordered
-          size="lg"
-          fullWidth
-          type="password"
-          placeholder="Password"
-        />
-        <Spacer />
-        <div className={styles.flexContainer}>
-          <Checkbox size="sm">Remember me</Checkbox>
-          <NextLink href="/">
-            <Link color="text" css={{ fontSize: 14 }}>
-              Forgot password?
-            </Link>
-          </NextLink>
-        </div>
-        <Spacer />
-        <Button
-          onClick={() => signIn()}
-          shadow
-          css={{ width: "100%" }}
-          size="lg"
-          color="gradient"
-        >
-          Log in
-        </Button>
+        <NextLink href="/">
+          <Link
+            color="text"
+            css={{
+              textAlign: "center",
+              fontWeight: "$medium",
+              fontSize: 14,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            Forgot your password?
+          </Link>
+        </NextLink>
       </div>
     </div>
   );
