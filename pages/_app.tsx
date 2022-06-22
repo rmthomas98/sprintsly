@@ -1,11 +1,16 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Nav } from "../components/Nav/Nav";
-import { createTheme, NextUIProvider, globalCss } from "@nextui-org/react";
+import {
+  createTheme,
+  NextUIProvider,
+  globalCss,
+  Dropdown,
+} from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
-import { NavBar } from "./admin/Navs/NavBar/NavBar";
+import { NavBar } from "../components/Admin/Navs/NavBar/NavBar";
 
 const globalStyles = globalCss({
   html: {
