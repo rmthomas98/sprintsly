@@ -7,31 +7,32 @@ import {
   BiMoon,
   BiHelpCircle,
   BiMessageRounded,
-  BiCog,
+  BiPackage,
   BiUser,
   BiBell,
 } from "react-icons/bi";
 import { getSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useTheme as useNextTheme } from "next-themes";
-import { userInfo } from "os";
-
-interface SessionData {
-  name: any;
-  email: any;
-  image: any;
-  username: any;
-}
+import { useRouter } from "next/router";
+import axios from "axios";
 
 export const NavBar = () => {
   const { isDark } = useTheme();
   const { setTheme } = useNextTheme();
-  const [sessionData, setSessionData] = useState<any>();
+  const router = useRouter();
+
+  const [data, setData] = useState<any>();
+  const [disabled, setDisabled] = useState<string>();
 
   useEffect(() => {
     const getData = async () => {
       const session = await getSession();
-      setSessionData(session);
+      const response = await axios.post("/api/admin/get-user", {
+        id: session?.id,
+      });
+      setData(response.data);
+      if (response.data.role !== "SUPERADMIN") setDisabled("my-subscription");
     };
     getData();
   }, []);
@@ -45,13 +46,33 @@ export const NavBar = () => {
   }, [isDark]);
 
   const getName = (): string => {
-    const name = sessionData.user.name[0];
+    const name = data.name;
     if (name.includes(" ")) {
       const firstInitial = name.split(" ")[0].charAt(0);
       const lastInitial = name.split(" ")[1].charAt(0);
       return `${firstInitial}${lastInitial}`;
     } else {
       return name.chartAt(0);
+    }
+  };
+
+  const handleDropDownAction = (key: any) => {
+    switch (key) {
+      case "my-profile":
+        router.push("/admin/my-profile");
+        break;
+      case "my-subscription":
+        router.push("/admin/my-subscription");
+        break;
+      case "theme":
+        isDark ? setTheme("light") : setTheme("dark");
+        break;
+      case "feedback":
+        router.push("/admin/feedback");
+        break;
+      case "support":
+        router.push("/admin/support");
+        break;
     }
   };
 
@@ -70,10 +91,10 @@ export const NavBar = () => {
             <Dropdown.Trigger>
               <User
                 as="button"
-                text={sessionData && getName()}
-                name={sessionData?.user.name[0]}
-                description={`@${sessionData?.username}`}
-                src={sessionData?.user.image && sessionData.user.image}
+                text={data && getName()}
+                name={data && data.name}
+                description="@rmthoams"
+                src=""
                 squared
                 bordered
                 color="gradient"
@@ -81,33 +102,29 @@ export const NavBar = () => {
               />
             </Dropdown.Trigger>
             <Dropdown.Menu
-              // disabledKeys={["team-settings"]}
+              onAction={handleDropDownAction}
               variant="shadow"
-              aria-label="Static Actions"
+              aria-label="dropdown actions"
+              disabledKeys={[disabled ? disabled : ""]}
             >
               <Dropdown.Item key="profile" css={{ height: "$18" }}>
                 <Text color="inherit">Signed in as</Text>
                 <Text size={14} color="inherit">
-                  {sessionData?.user.email}
+                  rmthomas@aonecarpet.com
                 </Text>
               </Dropdown.Item>
               <Dropdown.Item withDivider key="my-profile" icon={<BiUser />}>
                 My profile
               </Dropdown.Item>
-              <Dropdown.Item key="my-settings" icon={<BiCog />}>
-                My settings
+              <Dropdown.Item key="my-subscription" icon={<BiPackage />}>
+                My subscription
               </Dropdown.Item>
               <Dropdown.Item
                 withDivider
                 key="theme"
                 icon={isDark ? <BiSun /> : <BiMoon />}
               >
-                <Text
-                  color="inherit"
-                  onClick={() => setTheme(isDark ? "light" : "dark")}
-                >
-                  {isDark ? "Light mode" : "Dark mode"}
-                </Text>
+                {isDark ? "Light mode" : "Dark mode"}
               </Dropdown.Item>
               <Dropdown.Item
                 withDivider
@@ -116,8 +133,8 @@ export const NavBar = () => {
               >
                 Feedback
               </Dropdown.Item>
-              <Dropdown.Item key="help" icon={<BiHelpCircle />}>
-                Customer support
+              <Dropdown.Item key="support" icon={<BiHelpCircle />}>
+                Support
               </Dropdown.Item>
               <Dropdown.Item
                 withDivider
