@@ -43,11 +43,17 @@ export default NextAuth({
   },
   callbacks: {
     jwt: ({ token, user }) => {
-      if (user) token.id = user.id;
+      if (user) {
+        token.id = user.id;
+        token.username = user.username;
+      }
       return token;
     },
     session: ({ token, session }) => {
-      if (token) session.id = token.id;
+      if (token) {
+        session.id = token.id;
+        session.username = token.username;
+      }
       return session;
     },
   },

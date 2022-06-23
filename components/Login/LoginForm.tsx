@@ -17,13 +17,11 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 
 export const LoginForm = () => {
   const { handleSubmit, register } = useForm();
   const { isDark } = useTheme();
   const router = useRouter();
-  const { data: session } = useSession();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

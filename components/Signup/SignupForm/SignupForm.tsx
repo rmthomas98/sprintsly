@@ -268,7 +268,7 @@ export const SignupForm = (props: Props) => {
           type="text"
           aria-label="Username"
           contentLeft={<BiUserCheck />}
-          {...register("username", { required: true, maxLength: 20 })}
+          {...register("username", { required: true, maxLength: 15 })}
         />
         <Text
           color="error"
@@ -310,7 +310,7 @@ export const SignupForm = (props: Props) => {
           weight="semibold"
           size={12}
         >
-          * Username must be 20 characters or less
+          * Username must be 15 characters or less
         </Text>
         <Text
           color="error"
@@ -338,7 +338,7 @@ export const SignupForm = (props: Props) => {
               type="text"
               aria-label="Team name"
               contentLeft={<BiGroup />}
-              {...register("teamName", { required: true, maxLength: 20 })}
+              {...register("teamName", { required: true, maxLength: 15 })}
             />
 
             <Text
@@ -367,7 +367,7 @@ export const SignupForm = (props: Props) => {
               weight="semibold"
               size={12}
             >
-              * Team name must be 20 characters or less
+              * Team name must be 15 characters or less
             </Text>
             <Text
               color="error"
