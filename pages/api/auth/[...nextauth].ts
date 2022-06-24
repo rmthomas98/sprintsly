@@ -45,16 +45,12 @@ export default NextAuth({
     jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;
-        token.username = user.username;
-        token.role = user.role;
       }
       return token;
     },
     session: ({ token, session }) => {
       if (token) {
         session.id = token.id;
-        session.username = token.username;
-        session.role = token.role;
       }
       return session;
     },

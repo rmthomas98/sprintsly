@@ -1,15 +1,9 @@
-.wrapper {
-  padding: 16px;
+.container {
+  display: flex;
+  justify-content: space-between;
 
-  .container {
+  .rightContainer {
     display: flex;
-    justify-content: space-between;
-    max-width: 1000px;
-    margin: auto;
-
-    .rightContainer {
-      display: flex;
-      align-items: center;
-    }
+    align-items: center;
   }
 }

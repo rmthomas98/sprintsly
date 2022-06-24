@@ -24,6 +24,7 @@ export const NavBar = () => {
 
   const [data, setData] = useState<any>();
   const [disabled, setDisabled] = useState<string>();
+  const [initials, setInitials] = useState<string>();
 
   useEffect(() => {
     const getData = async () => {
@@ -45,16 +46,17 @@ export const NavBar = () => {
     }
   }, [isDark]);
 
-  const getName = (): string => {
+  useEffect(() => {
+    if (!data) return;
     const name = data.name;
     if (name.includes(" ")) {
       const firstInitial = name.split(" ")[0].charAt(0);
       const lastInitial = name.split(" ")[1].charAt(0);
-      return `${firstInitial}${lastInitial}`;
+      setInitials(`${firstInitial}${lastInitial}`);
     } else {
-      return name.chartAt(0);
+      setInitials(name.charAt(0));
     }
-  };
+  }, [data]);
 
   const handleDropDownAction = (key: any) => {
     switch (key) {
@@ -73,87 +75,81 @@ export const NavBar = () => {
       case "support":
         router.push("/admin/support");
         break;
+      case "logout":
+        signOut({ callbackUrl: "http://localhost:3000/login" });
+        break;
     }
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <Input
-          placeholder="Search..."
-          size="md"
-          fullWidth
-          contentLeft={<BiSearch />}
-          css={{ maxWidth: 300 }}
-        />
-        <div className={styles.rightContainer}>
-          <Dropdown placement="bottom-right">
-            <Dropdown.Trigger>
-              <User
-                as="button"
-                text={data && getName()}
-                name={data && data.name}
-                description="@rmthoams"
-                src=""
-                squared
-                bordered
-                color="gradient"
-                css={{ fontWeight: 600 }}
-              />
-            </Dropdown.Trigger>
-            <Dropdown.Menu
-              onAction={handleDropDownAction}
-              variant="shadow"
-              aria-label="dropdown actions"
-              disabledKeys={[disabled ? disabled : ""]}
+    <div className={styles.container}>
+      <Input
+        placeholder="Search..."
+        size="md"
+        fullWidth
+        contentLeft={<BiSearch />}
+        css={{ maxWidth: 300 }}
+      />
+      <div className={styles.rightContainer}>
+        <Dropdown placement="bottom-right">
+          <Dropdown.Trigger>
+            <User
+              as="button"
+              name={data && data.name}
+              text={initials}
+              description={data && `@${data.username}`}
+              src={data?.image && data.image}
+              squared
+              bordered
+              color="gradient"
+              css={{ fontWeight: 600 }}
+            />
+          </Dropdown.Trigger>
+          <Dropdown.Menu
+            onAction={handleDropDownAction}
+            variant="shadow"
+            aria-label="dropdown actions"
+            disabledKeys={[disabled ? disabled : ""]}
+          >
+            <Dropdown.Item key="profile" css={{ height: "$18" }}>
+              <Text color="inherit">Signed in as</Text>
+              <Text size={14} color="inherit">
+                {data && data.email}
+              </Text>
+            </Dropdown.Item>
+            <Dropdown.Item withDivider key="my-profile" icon={<BiUser />}>
+              My profile
+            </Dropdown.Item>
+            <Dropdown.Item key="my-subscription" icon={<BiPackage />}>
+              My subscription
+            </Dropdown.Item>
+            <Dropdown.Item
+              withDivider
+              key="theme"
+              icon={isDark ? <BiSun /> : <BiMoon />}
             >
-              <Dropdown.Item key="profile" css={{ height: "$18" }}>
-                <Text color="inherit">Signed in as</Text>
-                <Text size={14} color="inherit">
-                  rmthomas@aonecarpet.com
-                </Text>
-              </Dropdown.Item>
-              <Dropdown.Item withDivider key="my-profile" icon={<BiUser />}>
-                My profile
-              </Dropdown.Item>
-              <Dropdown.Item key="my-subscription" icon={<BiPackage />}>
-                My subscription
-              </Dropdown.Item>
-              <Dropdown.Item
-                withDivider
-                key="theme"
-                icon={isDark ? <BiSun /> : <BiMoon />}
-              >
-                {isDark ? "Light mode" : "Dark mode"}
-              </Dropdown.Item>
-              <Dropdown.Item
-                withDivider
-                key="feedback"
-                icon={<BiMessageRounded />}
-              >
-                Feedback
-              </Dropdown.Item>
-              <Dropdown.Item key="support" icon={<BiHelpCircle />}>
-                Support
-              </Dropdown.Item>
-              <Dropdown.Item
-                withDivider
-                key="logout"
-                color="error"
-                icon={<BiLogOut />}
-              >
-                <Text
-                  color="inherit"
-                  onClick={() =>
-                    signOut({ callbackUrl: "http://localhost:3000/login" })
-                  }
-                >
-                  Logout
-                </Text>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+              {isDark ? "Light mode" : "Dark mode"}
+            </Dropdown.Item>
+            <Dropdown.Item
+              withDivider
+              key="feedback"
+              icon={<BiMessageRounded />}
+            >
+              Feedback
+            </Dropdown.Item>
+            <Dropdown.Item key="support" icon={<BiHelpCircle />}>
+              Support
+            </Dropdown.Item>
+            <Dropdown.Item
+              withDivider
+              key="logout"
+              color="error"
+              icon={<BiLogOut />}
+            >
+              Log out
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
     </div>
   );

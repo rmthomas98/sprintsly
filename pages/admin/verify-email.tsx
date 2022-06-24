@@ -1,8 +1,15 @@
-import { getSession } from "next-auth/react";
+import { VerifyEmailForm } from "../../components/Admin/VerifyEmailForm/VerifyEmailForm";
 import { PrismaClient } from "@prisma/client";
+import { getSession } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
 
-const Index = () => {
-  return <div></div>;
+const VerifyEmail = ({ id }: any) => {
+  return (
+    <>
+      <VerifyEmailForm id={id} />
+      <Toaster />
+    </>
+  );
 };
 
 export const getServerSideProps = async (ctx: any) => {
@@ -23,19 +30,19 @@ export const getServerSideProps = async (ctx: any) => {
   const prisma = new PrismaClient();
   const user = await prisma.user.findUnique({ where: { id } });
 
-  // check if user has verified email
-  if (!user?.emailVerified) {
+  // check if user is already verified
+  if (user?.emailVerified) {
     return {
       redirect: {
-        destination: "/admin/verify-email",
+        destination: "/admin",
         permanant: false,
       },
     };
   }
 
   return {
-    props: {},
+    props: { id },
   };
 };
 
-export default Index;
+export default VerifyEmail;

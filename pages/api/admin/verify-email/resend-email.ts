@@ -8,12 +8,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient();
 
     // get email from frontend
-    const { email } = req.body;
+    const { id } = req.body;
 
     // get user from db
-    const user = await prisma.user.findUnique({ where: { email } });
-    // if no user is found send error to front end
-    if (!user) return res.status(200).send("email not found");
+    const user = await prisma.user.findUnique({ where: { id } });
+    console.log(user);
+
+    const email = user?.email;
 
     // create email with secret code for email verification
     const transporter = nodemailer.createTransport({
@@ -32,9 +33,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       subject: "Verify Your Email",
       html: `<html>
         <body>
-          <p style="font-size: 14px; margin-bottom: 10px;">Dear ${user.name},</p>
+          <p style="font-size: 14px; margin-bottom: 10px;">Dear ${user?.name},</p>
           <p style="font-size: 14px;">You are one step away from setting up your account and using our services! Copy the secret code below and enter it to verify your email.</p>
-          <p style="margin-top: 10px; font-size: 30px;">${user.verificationCode}</p>
+          <p style="margin-top: 10px; font-size: 30px;">${user?.verificationCode}</p>
           <p style="margin-top: 10px; font-size: 14px">Regards,</p>
           <p style="margin-top: 5px; font-size: 14px">The Sprintsly Team</p>
         </body>

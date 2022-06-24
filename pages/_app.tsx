@@ -11,6 +11,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 import { NavBar } from "../components/Admin/Navs/NavBar/NavBar";
+import { SideNav } from "../components/Admin/Navs/SideNav/SideNave";
 
 const globalStyles = globalCss({
   html: {
@@ -58,8 +59,17 @@ const MyApp = ({ Component, pageProps }: AppProps, session: any) => {
           <NextUIProvider>
             {router.pathname.startsWith("/admin") ? (
               <>
-                <NavBar />
-                <Component {...pageProps} />
+                <div className="admin-container">
+                  <SideNav />
+                  <div className="admin-right-wrapper">
+                    <div className="admin-right-container">
+                      {!router.pathname.endsWith("/verify-email") && <NavBar />}
+                      <div className="admin-content-container">
+                        <Component {...pageProps} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </>
             ) : (
               <>
