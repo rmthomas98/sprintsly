@@ -11,7 +11,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 import { NavBar } from "../components/Admin/Navs/NavBar/NavBar";
-import { SideNav } from "../components/Admin/Navs/SideNav/SideNave";
+import { SideNav } from "../components/Admin/Navs/SideNav/SideNav";
 
 const globalStyles = globalCss({
   html: {
@@ -60,7 +60,7 @@ const MyApp = ({ Component, pageProps }: AppProps, session: any) => {
             {router.pathname.startsWith("/admin") ? (
               <>
                 <div className="admin-container">
-                  <SideNav />
+                  {!router.pathname.endsWith("/verify-email") && <SideNav />}
                   <div className="admin-right-wrapper">
                     <div className="admin-right-container">
                       {!router.pathname.endsWith("/verify-email") && <NavBar />}

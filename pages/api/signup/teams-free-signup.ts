@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../lib/db";
 const bcrypt = require("bcryptjs");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const crypto = require("crypto");
@@ -15,7 +15,6 @@ interface Account {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
   try {
-    const prisma = new PrismaClient();
     const { name, email, username, teamName, password } = req.body;
 
     // check if email is already in use

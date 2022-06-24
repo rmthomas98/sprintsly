@@ -1,8 +1,8 @@
 import { getSession } from "next-auth/react";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../lib/db";
 
 const Index = () => {
-  return <div></div>;
+  return <div>overview</div>;
 };
 
 export const getServerSideProps = async (ctx: any) => {
@@ -20,7 +20,6 @@ export const getServerSideProps = async (ctx: any) => {
 
   // if session pull user from db
   const id: any = session.id;
-  const prisma = new PrismaClient();
   const user = await prisma.user.findUnique({ where: { id } });
 
   // check if user has verified email

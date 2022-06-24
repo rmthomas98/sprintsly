@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../lib/db";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
@@ -7,9 +7,6 @@ const nodemailer = require("nodemailer");
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // init prisma
-    const prisma = new PrismaClient();
-
     // get data from frontend
     const { name, email, username, password } = req.body.accountInfo;
     const paymentMethodId = req.body.setupIntent.setupIntent.payment_method;

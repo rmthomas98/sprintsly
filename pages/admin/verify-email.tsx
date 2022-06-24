@@ -1,5 +1,5 @@
 import { VerifyEmailForm } from "../../components/Admin/VerifyEmailForm/VerifyEmailForm";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../lib/db";
 import { getSession } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 
@@ -27,7 +27,6 @@ export const getServerSideProps = async (ctx: any) => {
 
   // if session pull user from db
   const id: any = session.id;
-  const prisma = new PrismaClient();
   const user = await prisma.user.findUnique({ where: { id } });
 
   // check if user is already verified

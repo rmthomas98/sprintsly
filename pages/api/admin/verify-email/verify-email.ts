@@ -1,10 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../../lib/db";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    // init prisma and get id and code from frontend
-    const prisma = new PrismaClient();
+    // get id and code from frontend
     const { id, secretCode } = req.body;
 
     // get user from db

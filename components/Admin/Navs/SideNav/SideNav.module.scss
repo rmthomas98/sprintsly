@@ -1,5 +1,6 @@
 .container {
-  min-width: 220px;
+  min-width: 230px;
+  max-width: 230px;
   background: #16181a;
   height: 100vh;
 
@@ -17,5 +18,8 @@
     padding: 8px 16px;
     width: 100%;
     position: relative;
+    align-items: center;
+    background: transparent;
+    transition: 300ms;
   }
 }

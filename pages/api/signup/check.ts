@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../lib/db";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
   try {
     const { email, username } = req.body;
-    const prisma = new PrismaClient();
 
     // check if email already exists
     const isEmailTaken = await prisma.user.findUnique({
