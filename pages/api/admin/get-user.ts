@@ -7,7 +7,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id } = req.body;
 
     // get data from frontend
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({
+      where: { id },
+      include: { subscription: true },
+    });
 
     const data = {
       name: user?.name,
@@ -15,6 +18,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       username: user?.username,
       image: user?.image,
       role: user?.role,
+      subType: user?.subscription?.type,
+      tier: user?.subscription?.tier,
     };
 
     res.status(200).send(data);

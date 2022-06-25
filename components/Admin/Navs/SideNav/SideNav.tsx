@@ -12,12 +12,29 @@ import {
   BiHive,
   BiLayer,
   BiNetworkChart,
+  BiNote,
+  BiTask,
   BiTime,
 } from "react-icons/bi";
+import { getSession, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const SideNav = () => {
   const { isDark } = useTheme();
   const router = useRouter();
+  const [sessionData, setSessionData] = useState<any>();
+  console.log(sessionData);
+
+  useEffect(() => {
+    const getData = async (): Promise<void> => {
+      const session = await getSession();
+      const id = session?.id;
+      const response = await axios.post("/api/admin/get-user", { id });
+      setSessionData(response.data);
+    };
+    getData();
+  }, []);
 
   return (
     <div
@@ -33,13 +50,25 @@ export const SideNav = () => {
             alt="sprintsly logo"
           />
           <Spacer x={0.3} />
-          <Text weight="medium" size={22} css={{ fontFamily: "comfortaa" }}>
+          <Text
+            small
+            weight="medium"
+            size={22}
+            css={{ fontFamily: "comfortaa" }}
+          >
             Sprintsly
           </Text>
         </a>
       </NextLink>
-      <Divider />
-      <NextLink href="/admin">
+      <Divider css={{ mb: "$6" }} />
+      <Text
+        small
+        weight="bold"
+        css={{ color: "$accents8", pl: "$8", letterSpacing: "$wide" }}
+      >
+        MAIN
+      </Text>
+      {/* <NextLink href="/admin">
         <Link
           className={styles.link}
           css={{ color: router.pathname.endsWith("/admin") ? "" : "$text" }}
@@ -47,38 +76,31 @@ export const SideNav = () => {
           <BiGridAlt style={{ marginRight: 8 }} />
           Overview
         </Link>
-      </NextLink>
-      <NextLink href="/admin/my-team">
+      </NextLink> */}
+      <NextLink href="/admin">
         <Link
           className={styles.link}
           css={{
-            color: router.pathname.endsWith("/my-team") ? "" : "$text",
-          }}
-        >
-          <BiGroup style={{ marginRight: 8 }} />
-          My Team
-        </Link>
-      </NextLink>
-      <NextLink href="/admin/my-projects">
-        <Link
-          className={styles.link}
-          css={{
-            color: router.pathname.endsWith("/my-projects") ? "" : "$text",
+            color:
+              router.pathname.endsWith("/admin") ||
+              router.pathname.includes("project-view")
+                ? ""
+                : "$text",
           }}
         >
           <BiLayer style={{ marginRight: 8 }} />
           My projects
         </Link>
       </NextLink>
-      <NextLink href="/admin/my-cloud">
+      <NextLink href="/admin/my-tasks">
         <Link
           className={styles.link}
           css={{
-            color: router.pathname.endsWith("/my-cloud") ? "" : "$text",
+            color: router.pathname.endsWith("/my-tasks") ? "" : "$text",
           }}
         >
-          <BiCloud style={{ marginRight: 8 }} />
-          My cloud
+          <BiTask style={{ marginRight: 8 }} />
+          My tasks
         </Link>
       </NextLink>
       <NextLink href="/admin/flowchart">
@@ -92,6 +114,17 @@ export const SideNav = () => {
           Flow chart
         </Link>
       </NextLink>
+      <NextLink href="/admin/cloud">
+        <Link
+          className={styles.link}
+          css={{
+            color: router.pathname.endsWith("/cloud") ? "" : "$text",
+          }}
+        >
+          <BiCloud style={{ marginRight: 8 }} />
+          Cloud storage
+        </Link>
+      </NextLink>
       <NextLink href="/admin/calendar">
         <Link
           className={styles.link}
@@ -103,28 +136,44 @@ export const SideNav = () => {
           Calendar
         </Link>
       </NextLink>
-      <NextLink href="/admin/database">
+      <NextLink href="/admin/notes">
         <Link
           className={styles.link}
           css={{
-            color: router.pathname.endsWith("/database") ? "" : "$text",
+            color: router.pathname.endsWith("/notes") ? "" : "$text",
+            mb: "$12",
           }}
         >
-          <BiData style={{ marginRight: 8 }} />
-          Database
+          <BiNote style={{ marginRight: 8 }} />
+          Notes
         </Link>
       </NextLink>
-      <NextLink href="/admin/time-tracker">
-        <Link
-          className={styles.link}
-          css={{
-            color: router.pathname.endsWith("/time-tracker") ? "" : "$text",
-          }}
-        >
-          <BiTime style={{ marginRight: 8 }} />
-          Time tracker
-        </Link>
-      </NextLink>
+      {sessionData?.subType === "TEAMS" && (
+        <>
+          <Text
+            small
+            weight="bold"
+            css={{
+              color: "$accents8",
+              pl: "$8",
+              letterSpacing: "$wide",
+            }}
+          >
+            MANAGEMENT
+          </Text>
+          <NextLink href="/admin/my-team">
+            <Link
+              className={styles.link}
+              css={{
+                color: router.pathname.endsWith("/my-team") ? "" : "$text",
+              }}
+            >
+              <BiGroup style={{ marginRight: 8 }} />
+              My Team
+            </Link>
+          </NextLink>
+        </>
+      )}
     </div>
   );
 };

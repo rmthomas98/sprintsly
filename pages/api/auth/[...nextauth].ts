@@ -18,7 +18,10 @@ export default NextAuth({
         const password = credentials?.password;
 
         // look up user in db
-        const user = await prisma.user.findUnique({ where: { email } });
+        const user = await prisma.user.findUnique({
+          where: { email },
+          include: { subscription: true },
+        });
 
         if (!user) throw new Error("User not found");
 

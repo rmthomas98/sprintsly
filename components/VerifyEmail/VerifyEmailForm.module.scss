@@ -1,0 +1,16 @@
+.wrapper {
+  padding: 16px;
+
+  .container {
+    max-width: 400px;
+    margin: auto;
+
+    .header {
+      text-align: center;
+    }
+
+    .description {
+      text-align: center;
+    }
+  }
+}
