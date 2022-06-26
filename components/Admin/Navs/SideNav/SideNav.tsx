@@ -41,48 +41,36 @@ export const SideNav = () => {
   return (
     <div
       className={styles.container}
-      style={{ background: isDark ? "#16181A" : "#F1F3F5" }}
+      style={{ background: isDark ? "#00000042" : "#F1F3F5" }}
     >
       <NextLink href="/admin">
         <a className={styles.logoContainer}>
           <Image
-            src="/images/transparent-logo.png"
-            height={45}
-            width={45}
+            src={
+              isDark
+                ? "/images/side-logo-light.png"
+                : "/images/side-logo-dark.png"
+            }
+            height={35}
+            width={130}
+            quality={100}
             alt="sprintsly logo"
           />
-          <Spacer x={0.3} />
-          <Text
-            small
-            weight="medium"
-            size={22}
-            css={{ fontFamily: "comfortaa" }}
-          >
-            Sprintsly
-          </Text>
         </a>
       </NextLink>
-      <Divider css={{ mb: "$6" }} />
+      {/* <Divider css={{ width: "80%", margin: "auto" }} /> */}
       <Text
         weight="bold"
         css={{
           color: "$accents8",
           pl: "$8",
+          mt: "$10",
           letterSpacing: "$wide",
           fontSize: 11,
         }}
       >
         MAIN
       </Text>
-      {/* <NextLink href="/admin">
-        <Link
-          className={styles.link}
-          css={{ color: router.pathname.endsWith("/admin") ? "" : "$accents7" }}
-        >
-          <BiGridAlt style={{ marginRight: 8 }} />
-          Overview
-        </Link>
-      </NextLink> */}
       <NextLink href="/admin">
         <Link
           className={styles.link}

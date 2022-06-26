@@ -5,9 +5,7 @@ import { prisma } from "../../lib/db";
 
 const MyProfile = ({ user }: any) => {
   return (
-    <div style={{ maxWidth: 800, margin: "auto" }}>
-      <Text h3>Your profile</Text>
-      <Spacer />
+    <div>
       <ProfileContainer user={user} />
     </div>
   );

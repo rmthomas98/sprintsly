@@ -13,17 +13,12 @@ body {
   display: flex;
 }
 
-.admin-right-wrapper {
-  padding: 16px;
-  width: 100%;
-}
-
 .admin-right-container {
   width: 100%;
-  max-width: 1000px;
-  margin: auto;
 }
 
 .admin-content-container {
-  padding: 16px 0px;
+  max-width: 1032px;
+  padding: 10px 16px 50px 16px;
+  margin: auto;
 }

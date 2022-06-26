@@ -61,12 +61,10 @@ const MyApp = ({ Component, pageProps }: AppProps, session: any) => {
               <>
                 <div className="admin-container">
                   {!router.pathname.endsWith("/verify-email") && <SideNav />}
-                  <div className="admin-right-wrapper">
-                    <div className="admin-right-container">
-                      {!router.pathname.endsWith("/verify-email") && <NavBar />}
-                      <div className="admin-content-container">
-                        <Component {...pageProps} />
-                      </div>
+                  <div className="admin-right-container">
+                    {!router.pathname.endsWith("/verify-email") && <NavBar />}
+                    <div className="admin-content-container">
+                      <Component {...pageProps} />
                     </div>
                   </div>
                 </div>

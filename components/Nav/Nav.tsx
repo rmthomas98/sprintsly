@@ -47,15 +47,16 @@ export const Nav = () => {
           <NextLink href="/">
             <a className={styles.logoContainer}>
               <Image
-                src="/images/transparent-logo.png"
-                height={45}
-                width={45}
+                src={
+                  isDark
+                    ? "/images/side-logo-light.png"
+                    : "/images/side-logo-dark.png"
+                }
+                height={35}
+                width={130}
+                quality={100}
                 alt="sprintsly logo"
               />
-              <Spacer x={0.3} />
-              <Text weight="medium" size={22} css={{ fontFamily: "comfortaa" }}>
-                Sprintsly
-              </Text>
             </a>
           </NextLink>
           <div className={styles.centerContainer}>

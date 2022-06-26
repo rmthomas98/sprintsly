@@ -1,4 +1,4 @@
-import styles from "./Picture.module.scss";
+import styles from "./Card.module.scss";
 import {
   Card,
   Text,
@@ -18,7 +18,7 @@ export const Picture = ({ user }: any) => {
   const [preview, setPreview] = useState<any>(null);
   const [uploadedImage, setUploadedImage] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const { isDark } = useTheme();
   const router = useRouter();
 
@@ -94,7 +94,7 @@ export const Picture = ({ user }: any) => {
   };
 
   return (
-    <Card>
+    <Card isHoverable>
       <Card.Header>
         <Text h4 weight="medium">
           Your profile picture
@@ -114,6 +114,7 @@ export const Picture = ({ user }: any) => {
             />
           </label>
           <Input
+            aria-label="avatar"
             type="file"
             id="avatar"
             css={{ display: "none" }}
@@ -125,7 +126,7 @@ export const Picture = ({ user }: any) => {
       <Card.Footer>
         <div className={styles.footerContainer}>
           <Text size={14} weight="medium" css={{ color: "$accents8" }}>
-            Update your picture
+            Update picture
           </Text>
           <Button
             onClick={handleImageUpdate}

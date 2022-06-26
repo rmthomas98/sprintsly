@@ -1,9 +1,19 @@
-.container {
-  display: flex;
-  justify-content: space-between;
+.wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  padding: 12px 16px 0px 16px;
+  backdrop-filter: blur(7px);
 
-  .rightContainer {
+  .container {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: auto;
+
+    .rightContainer {
+      display: flex;
+      align-items: center;
+    }
   }
 }

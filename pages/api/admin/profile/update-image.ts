@@ -36,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const uploadedImage: any = await s3
       .upload({
         Bucket: "sprintsly",
-        Key: `${id}/profile-pic.${image.originalFilename.split(".")[1]}`,
+        Key: `${id}/${image.originalFilename}`,
         Body: blob,
       })
       .promise();

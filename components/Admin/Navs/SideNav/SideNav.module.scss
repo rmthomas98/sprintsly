@@ -1,17 +1,19 @@
 .container {
   width: 230px;
   min-width: 230px;
-  background: #16181a;
+  background: #00000042;
   height: 100vh;
   transition: 300ms;
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur;
 
   .logoContainer {
-    filter: hue-rotate(200deg);
     cursor: pointer;
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 10px;
+    padding: 12px 16px;
     justify-content: center;
   }
 

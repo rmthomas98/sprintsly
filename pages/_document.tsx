@@ -1,3 +1,4 @@
+import React from "react";
 import Document, {
   Html,
   Head,
@@ -12,10 +13,10 @@ class MyDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
   ): Promise<DocumentInitialProps> {
-    let initialProps = await Document.getInitialProps(ctx);
+    const initialProps = await Document.getInitialProps(ctx);
     return {
       ...initialProps,
-      styles: [<>{initialProps.styles}</>],
+      styles: React.Children.toArray([initialProps.styles]),
     };
   }
 
