@@ -100,6 +100,7 @@ export const NavBar = () => {
               description={data && `@${data.username}`}
               src={data?.image && data.image}
               squared
+              pointer
               bordered
               color="gradient"
               css={{ fontWeight: 600 }}

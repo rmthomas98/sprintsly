@@ -16,8 +16,10 @@
     "@nextui-org/react": "^1.0.0-beta.9",
     "@stripe/react-stripe-js": "^1.9.0",
     "@stripe/stripe-js": "^1.32.0",
+    "aws-sdk": "^2.1162.0",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
+    "formidable": "^2.0.1",
     "next": "12.1.6",
     "next-auth": "^4.5.0",
     "next-themes": "^0.2.0",
@@ -27,6 +29,7 @@
     "react-hook-form": "^7.32.2",
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.4.0",
+    "react-image-crop": "^10.0.4",
     "sass": "^1.52.3",
     "stripe": "^9.9.0"
   },

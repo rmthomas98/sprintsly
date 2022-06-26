@@ -23,6 +23,7 @@ model User {
   name              String
   email             String        @unique
   username          String        @unique
+  position          String?
   password          String
   image             String?
   emailVerified     Boolean       @default(false)
