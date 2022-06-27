@@ -1,12 +1,22 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../../../lib/db";
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { email, id, code } = req.body;
-    console.log(email, id, code);
 
-    const user = await prisma.user.findUnique({ where: { id } });
+    const user = await prisma.user.findUnique({
+      where: { id },
+      include: { customer: true },
+    });
+    console.log(user?.role);
+
+    if (user?.role === "SUPERADMIN") {
+      await stripe.customers.update(user?.customer?.customerId, {
+        email: email,
+      });
+    }
 
     if (user?.verificationCode !== code.trim()) {
       return res.status(200).send("invalid code");
