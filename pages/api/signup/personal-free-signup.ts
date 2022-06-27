@@ -37,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
     });
 
     // generate secret code
-    const secretCode = crypto.randomBytes(6).toString("base64").toUpperCase();
+    const secretCode = crypto.randomBytes(4).toString("hex").toUpperCase();
 
     // create user in postgres
     const customer = await prisma.user.create({

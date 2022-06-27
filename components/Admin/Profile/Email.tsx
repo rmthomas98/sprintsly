@@ -145,6 +145,8 @@ export const Email = ({ user }: any) => {
                 type="submit"
                 size="sm"
                 shadow
+                auto
+                css={{ width: 81 }}
                 disabled={isDisabled || isLoading}
               >
                 {isLoading ? <Loading size="xs" /> : "Update"}

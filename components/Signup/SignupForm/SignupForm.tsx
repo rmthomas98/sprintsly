@@ -83,7 +83,7 @@ export const SignupForm = (props: Props) => {
     if (data.username.includes(" ")) return;
     if (data.teamName?.includes(" ")) return;
     setIsLoading(true);
-    const { firstName, lastName, email, username, teamName, password } = data;
+    const { name, email, username, teamName, password } = data;
     const response = await axios.post("/api/signup/check", {
       email,
       username,

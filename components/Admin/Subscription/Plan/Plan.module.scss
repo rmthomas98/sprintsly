@@ -1,0 +1,14 @@
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  .badge {
+    background: linear-gradient(red, blue);
+  }
+
+  .btnContainer {
+    display: flex;
+  }
+}

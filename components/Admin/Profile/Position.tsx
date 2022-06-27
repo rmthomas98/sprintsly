@@ -20,7 +20,7 @@ export const Position = ({ user }: any) => {
     register,
     formState: { errors },
   } = useForm();
-  const [position, setPosition] = useState(user.position || null);
+  const [position, setPosition] = useState(user.position || "");
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
@@ -114,6 +114,8 @@ export const Position = ({ user }: any) => {
               type="submit"
               size="sm"
               shadow
+              auto
+              css={{ width: 81 }}
               disabled={isDisabled || isLoading}
             >
               {isLoading ? <Loading size="xs" /> : "Update"}

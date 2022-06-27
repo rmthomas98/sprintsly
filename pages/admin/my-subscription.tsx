@@ -1,11 +1,17 @@
 import { getSession } from "next-auth/react";
 import { prisma } from "../../lib/db";
+import { SubscriptionContainer } from "../../components/Admin/Subscription/SubscriptionContainer/SubscriptionContainer";
 
-const MySubscription = () => {
-  return <div>my subscription</div>;
+const MySubscription = ({ user }: any) => {
+  console.log(user);
+  return (
+    <>
+      <SubscriptionContainer user={user} />
+    </>
+  );
 };
 
-export const getSererSideProps = async (ctx: any) => {
+export const getServerSideProps = async (ctx: any) => {
   const session = await getSession(ctx);
 
   if (!session) {
@@ -18,12 +24,16 @@ export const getSererSideProps = async (ctx: any) => {
   }
 
   const id: any = session.id;
-  let user: any = await prisma.user.findUnique({
+  const user: any = await prisma.user.findUnique({
     where: { id },
-    include: { subscription: true },
+    include: { subscription: true, card: true, customer: true },
   });
 
-  if (!user?.subscription) {
+  const { subscription } = user;
+  const { card } = user;
+  const { customer } = user;
+
+  if (!subscription || user.role !== "SUPERADMIN") {
     return {
       redirect: {
         destination: "/admin",
@@ -32,10 +42,8 @@ export const getSererSideProps = async (ctx: any) => {
     };
   }
 
-  user = { name: user.name };
-
   return {
-    props: {},
+    props: { user: { subscription, customer, card } },
   };
 };
 

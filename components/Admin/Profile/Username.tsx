@@ -102,7 +102,14 @@ export const Username = ({ user }: any) => {
             <Text weight="medium" size={14} css={{ color: "$accents8" }}>
               Update username
             </Text>
-            <Button type="submit" size="sm" disabled={isDisabled || isLoading}>
+            <Button
+              auto
+              type="submit"
+              size="sm"
+              shadow
+              css={{ width: 81 }}
+              disabled={isDisabled || isLoading}
+            >
               {isLoading ? <Loading size="xs" /> : "Update"}
             </Button>
           </div>

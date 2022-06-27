@@ -48,7 +48,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     // generate secret code
-    const secretCode = crypto.randomBytes(6).toString("base64").toUpperCase();
+    const secretCode = crypto.randomBytes(4).toString("hex").toUpperCase();
 
     const user = await prisma.user.create({
       data: {
