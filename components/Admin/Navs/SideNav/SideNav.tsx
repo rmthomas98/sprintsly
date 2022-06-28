@@ -84,8 +84,8 @@ export const SideNav = () => {
             fontWeight: "$semibold",
           }}
         >
-          <BiLayer style={{ marginRight: 8 }} size={18} />
-          My projects
+          <BiLayer className={styles.icon} size={18} />
+          <span className={styles.linkTitle}>My projects</span>
           <span
             className={styles.bar}
             style={{

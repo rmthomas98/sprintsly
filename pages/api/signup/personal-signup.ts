@@ -22,6 +22,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       email: email.trim(),
     });
 
+    const invoice = await stripe.invoices.retrieve(customer.id);
+
     // attach payment method to customer
     await stripe.paymentMethods.attach(paymentMethodId, {
       customer: customer.id,
@@ -86,6 +88,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         userId: user.id,
       },
     });
+
+    // await prisma.invoice.create({
+    //   data: {
+    //     invoiceId: invoice.id,
+    //   },
+    // });
 
     // create email with secret code for email verification
     const transporter = nodemailer.createTransport({

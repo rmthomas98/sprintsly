@@ -76,7 +76,6 @@ model Subscription {
   tier              Tier
   quantity          Int     @default(1)
   cancelAtPeriodEnd Boolean @default(false)
-  currentInvoice    String?
   nextInvoice       String?
   user              User    @relation(fields: [userId], references: [id])
   userId            Int     @unique
@@ -84,8 +83,10 @@ model Subscription {
 
 model Invoice {
   id         Int       @id @default(autoincrement())
+  invoiceId  String?
   date       String
   amount     String
+  url        String?
   Customer   Customer? @relation(fields: [customerId], references: [id])
   customerId Int?
 }

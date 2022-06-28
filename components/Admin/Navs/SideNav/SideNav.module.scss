@@ -29,6 +29,10 @@
       height: 100%;
     }
 
+    .icon {
+      margin-right: 8px;
+    }
+
     .bar {
       height: 0;
       width: 2.5px;
@@ -47,5 +51,21 @@
   .container {
     min-width: 60px;
     width: 60px;
+
+    .link {
+      justify-content: center;
+
+      .icon {
+        margin: 0;
+      }
+
+      .bar {
+        display: none;
+      }
+
+      .linkTitle {
+        display: none;
+      }
+    }
   }
 }
