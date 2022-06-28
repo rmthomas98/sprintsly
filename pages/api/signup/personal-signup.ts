@@ -22,8 +22,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       email: email.trim(),
     });
 
-    const invoice = await stripe.invoices.retrieve(customer.id);
-
     // attach payment method to customer
     await stripe.paymentMethods.attach(paymentMethodId, {
       customer: customer.id,
@@ -42,6 +40,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       items: [{ price: "price_1LCXUWA7aOT5A0f28gNvy0Kd" }],
     });
 
+    const invoice = await stripe.invoices.list({
+      customer: customer.id,
+      limit: 1,
+    });
+
     // generate secret code
     const secretCode = crypto.randomBytes(4).toString("hex").toUpperCase();
 
@@ -58,7 +61,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     // create customer in db
-    await prisma.customer.create({
+    const prismaCustomer = await prisma.customer.create({
       data: {
         customerId: customer.id,
         paymentMethod: paymentMethodId,
@@ -75,6 +78,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         type: "PERSONAL",
         tier: "PRO",
         userId: user.id,
+        nextInvoice: subscription.current_period_end.toString(),
       },
     });
 
@@ -89,11 +93,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
-    // await prisma.invoice.create({
-    //   data: {
-    //     invoiceId: invoice.id,
-    //   },
-    // });
+    await prisma.invoice.create({
+      data: {
+        invoiceId: invoice.data[0].id,
+        date: invoice.data[0].period_start.toString(),
+        amount: invoice.data[0].total.toString(),
+        url: invoice.data[0].hosted_invoice_url,
+        status: invoice.data[0].status,
+        customerId: prismaCustomer.id,
+      },
+    });
 
     // create email with secret code for email verification
     const transporter = nodemailer.createTransport({

@@ -87,6 +87,7 @@ model Invoice {
   date       String
   amount     String
   url        String?
+  status     String
   Customer   Customer? @relation(fields: [customerId], references: [id])
   customerId Int?
 }

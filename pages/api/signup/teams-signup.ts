@@ -40,6 +40,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       items: [{ price: "price_1LCWWLA7aOT5A0f2uxbA1BqY" }],
     });
 
+    console.log(subscription);
+
+    // retrieve invoice from stripe
+    const invoice = await stripe.invoices.list({
+      customer: customer.id,
+      limit: 1,
+    });
+
     // create team in db
     const team = await prisma.team.create({
       data: {
@@ -62,7 +70,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
-    await prisma.customer.create({
+    const prismaCustomer = await prisma.customer.create({
       data: {
         customerId: customer.id,
         paymentMethod: paymentMethodId,
@@ -78,6 +86,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         type: "TEAMS",
         tier: "PRO",
         userId: user.id,
+        nextInvoice: subscription.current_period_end.toString(),
       },
     });
 
@@ -88,6 +97,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         month: exp_month,
         year: exp_year,
         userId: user.id,
+      },
+    });
+
+    await prisma.invoice.create({
+      data: {
+        invoiceId: invoice.data[0].id,
+        date: invoice.data[0].period_start.toString(),
+        amount: invoice.data[0].total.toString(),
+        url: invoice.data[0].hosted_invoice_url,
+        status: invoice.data[0].status,
+        customerId: prismaCustomer.id,
       },
     });
 

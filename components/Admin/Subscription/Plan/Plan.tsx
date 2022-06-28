@@ -1,10 +1,18 @@
-import { Button, Card, Loading, Text, useTheme } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  Loading,
+  Text,
+  useTheme,
+  Spacer,
+} from "@nextui-org/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import styles from "./Plan.module.scss";
 import { useRouter } from "next/router";
 import { PlanModal } from "./PlanModal/PlanModal";
+import { format } from "date-fns";
 
 export const Plan = ({ user }: any) => {
   const [price, setPrice] = useState<string>("");
@@ -84,25 +92,35 @@ export const Plan = ({ user }: any) => {
         <Card.Body>
           <Card variant="bordered" css={{ maxWidth: 300 }}>
             <Card.Header>
-              <Text h5 weight="semibold" css={{ textTransform: "capitalize" }}>
+              <Text
+                h5
+                size={18}
+                weight="semibold"
+                css={{ textTransform: "capitalize" }}
+              >
                 {user.subscription.type.toLowerCase()}
               </Text>
             </Card.Header>
             <Card.Divider />
             <Card.Body>
-              <Text
-                size={14}
-                weight="medium"
-                css={{ textTransform: "capitalize" }}
-              >
-                {user.subscription.tier.toLowerCase()}
-              </Text>
+              <>
+                <Text
+                  size={16}
+                  weight="medium"
+                  css={{ textTransform: "capitalize" }}
+                >
+                  {user.subscription.tier.toLowerCase()}
+                </Text>
+              </>
               {user.subscription.quantity > 1 ||
                 (user.subscription.type === "TEAMS" && (
-                  <Text
-                    size={13}
-                    weight="medium"
-                  >{`Team members: ${user.subscription.quantity}`}</Text>
+                  <Text size={14} weight="medium">{`${
+                    user.subscription.quantity
+                  } ${
+                    user.subscription.quantity > 1
+                      ? "Team members"
+                      : "Team member"
+                  }`}</Text>
                 ))}
               <Text h3>
                 {price}
@@ -111,6 +129,18 @@ export const Plan = ({ user }: any) => {
                   / month
                 </Text>
               </Text>
+              {user.subscription.cancelAtPeriodEnd && (
+                <>
+                  <Spacer y={0.4} />
+                  <Text color="error" size={14} weight="semibold">
+                    Downgrades to free on{" "}
+                    {format(
+                      new Date(user.subscription.nextInvoice * 1000),
+                      "MMMM dd, yyyy"
+                    )}
+                  </Text>
+                </>
+              )}
             </Card.Body>
           </Card>
         </Card.Body>
