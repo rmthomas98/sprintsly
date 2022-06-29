@@ -257,6 +257,7 @@ export const SideNav = () => {
           }}
         >
           <BiBell style={{ marginRight: 8 }} size={18} />
+          <script src="https://cdn.lordicon.com/xdjxvujz.js"></script>
           Notifications
           <span
             className={styles.bar}

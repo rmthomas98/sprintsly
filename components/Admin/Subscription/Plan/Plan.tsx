@@ -157,7 +157,7 @@ export const Plan = ({ user }: any) => {
                     onClick={() => setPeriodEndModal(true)}
                     size="sm"
                     color="error"
-                    css={{ mr: "$4", width: 85 }}
+                    css={{ mr: "$4", width: 81 }}
                     flat
                     auto
                     disabled={periodEndLoading}
@@ -171,7 +171,7 @@ export const Plan = ({ user }: any) => {
                     onClick={() => setPeriodEndModal(true)}
                     size="sm"
                     color="primary"
-                    css={{ mr: "$4", width: 85 }}
+                    css={{ mr: "$4", width: 81 }}
                     flat
                     auto
                     disabled={periodEndLoading}
@@ -179,8 +179,8 @@ export const Plan = ({ user }: any) => {
                     {periodEndLoading ? <Loading size="xs" /> : "Renew"}
                   </Button>
                 )}
-              <Button size="sm" auto shadow css={{ width: 85 }}>
-                Change
+              <Button size="sm" auto shadow css={{ width: 81 }}>
+                Update
               </Button>
             </div>
           </div>

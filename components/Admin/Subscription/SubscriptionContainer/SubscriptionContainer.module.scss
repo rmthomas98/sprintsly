@@ -1,5 +1,9 @@
 .container {
   animation: fadeIn 1s forwards;
+
+  .flexContainer {
+    display: flex;
+  }
 }
 
 @keyframes fadeIn {

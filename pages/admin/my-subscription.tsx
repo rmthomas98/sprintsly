@@ -26,12 +26,13 @@ export const getServerSideProps = async (ctx: any) => {
   const id: any = session.id;
   const user: any = await prisma.user.findUnique({
     where: { id },
-    include: { subscription: true, card: true, customer: true },
+    include: { subscription: true, card: true, customer: true, invoices: true },
   });
 
   const { subscription } = user;
   const { card } = user;
   const { customer } = user;
+  const { invoices } = user;
 
   if (!subscription || user.role !== "SUPERADMIN") {
     return {
@@ -43,7 +44,7 @@ export const getServerSideProps = async (ctx: any) => {
   }
 
   return {
-    props: { user: { subscription, customer, card } },
+    props: { user: { subscription, customer, card, invoices } },
   };
 };
 

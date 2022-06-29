@@ -104,10 +104,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       data: {
         invoiceId: invoice.data[0].id,
         date: invoice.data[0].period_start.toString(),
-        amount: invoice.data[0].total.toString(),
+        amountDue: invoice.data[0].amount_due.toString(),
+        amountPaid: invoice.data[0].amount_paid.toString(),
         url: invoice.data[0].hosted_invoice_url,
         status: invoice.data[0].status,
-        customerId: prismaCustomer.id,
+        userId: user.id,
       },
     });
 
