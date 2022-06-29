@@ -41,7 +41,7 @@ export const Invoices = ({ user }: any) => {
               iconRight={<BiLinkExternal />}
               auto
               size="sm"
-              color="gradient"
+              flat
               name="invoice"
             >
               View

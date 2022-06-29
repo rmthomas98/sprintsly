@@ -85,7 +85,7 @@ model Invoice {
   id         Int     @id @default(autoincrement())
   invoiceId  String?
   date       String
-  amountDue  String
+  amountDue  String?
   amountPaid String
   url        String?
   status     String

@@ -1,17 +1,13 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Nav } from "../components/Nav/Nav";
-import {
-  createTheme,
-  NextUIProvider,
-  globalCss,
-  Dropdown,
-} from "@nextui-org/react";
+import { createTheme, NextUIProvider, globalCss } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { SessionProvider } from "next-auth/react";
 import { useRouter } from "next/router";
 import { NavBar } from "../components/Admin/Navs/NavBar/NavBar";
 import { SideNav } from "../components/Admin/Navs/SideNav/SideNav";
+import NextNProgress from "nextjs-progressbar";
 
 const globalStyles = globalCss({
   html: {
@@ -59,6 +55,7 @@ const MyApp = ({ Component, pageProps }: AppProps, session: any) => {
           <NextUIProvider>
             {router.pathname.startsWith("/admin") ? (
               <>
+                <NextNProgress color="#0072F5" height={2} />
                 <div className="admin-container">
                   {!router.pathname.endsWith("/verify-email") && <SideNav />}
                   <div className="admin-right-container">

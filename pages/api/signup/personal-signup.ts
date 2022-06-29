@@ -93,16 +93,31 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
-    await prisma.invoice.create({
-      data: {
-        invoiceId: invoice.data[0].id,
-        date: invoice.data[0].period_start.toString(),
-        amountDue: invoice.data[0].amount_due.toString(),
-        amountPaid: invoice.data[0].amount_paid.toString(),
-        url: invoice.data[0].hosted_invoice_url,
-        status: invoice.data[0].status,
-        userId: user.id
-      },
+    const upcomingInvoice = await stripe.invoices.retrieveUpcoming({
+      customer: customer.id,
+    });
+
+    await prisma.invoice.createMany({
+      data: [
+        {
+          invoiceId: invoice.data[0].id,
+          date: invoice.data[0].period_start.toString(),
+          amountDue: invoice.data[0].amount_due.toString(),
+          amountPaid: invoice.data[0].amount_paid.toString(),
+          url: invoice.data[0].hosted_invoice_url,
+          status: invoice.data[0].status,
+          userId: user.id,
+        },
+        {
+          invoiceId: upcomingInvoice.lines.data[0].id,
+          date: upcomingInvoice.period_start.toString(),
+          amountDue: upcomingInvoice.amount_due.toString(),
+          amountPaid: upcomingInvoice.amount_paid.toString(),
+          url: upcomingInvoice.lines.url,
+          status: upcomingInvoice.status,
+          userId: user.id,
+        },
+      ],
     });
 
     // create email with secret code for email verification
