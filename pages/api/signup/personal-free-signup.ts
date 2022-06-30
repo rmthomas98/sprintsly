@@ -12,7 +12,7 @@ interface Account {
   password: string;
 }
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { name, email, username, password }: Account = req.body;
 
