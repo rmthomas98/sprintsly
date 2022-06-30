@@ -110,10 +110,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         {
           invoiceId: upcomingInvoice.lines.data[0].id,
-          date: upcomingInvoice.period_start.toString(),
+          date: upcomingInvoice.period_end.toString(),
           amountDue: upcomingInvoice.amount_due.toString(),
           amountPaid: upcomingInvoice.amount_paid.toString(),
-          url: upcomingInvoice.lines.url,
           status: upcomingInvoice.status,
           userId: user.id,
         },
