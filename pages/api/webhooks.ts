@@ -8,14 +8,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (event.type === "invoice.payment_succeeded") {
       const { customer: stripeCustomer } = event.data.object;
-      const customer = await prisma.customer.findFirst({
-        where: { customerId: stripeCustomer },
-        include: { user: true },
-      });
-      const user = customer?.user;
     }
+
+    res.status(200).json({ received: true });
   } catch {
-    res.status(500).json({ recieved: true });
+    res.status(200).json({ received: true });
   }
 };
 
