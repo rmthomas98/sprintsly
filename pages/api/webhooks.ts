@@ -8,6 +8,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (event.type === "invoice.payment_succeeded") {
       const { customer: stripeCustomer } = event.data.object;
+      const something = "this";
     }
 
     res.status(200).json({ received: true });
