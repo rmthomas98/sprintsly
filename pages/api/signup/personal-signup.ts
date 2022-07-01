@@ -34,17 +34,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
-    // create subscription in stripe
-    const subscription = await stripe.subscriptions.create({
-      customer: customer.id,
-      items: [{ price: "price_1LCXUWA7aOT5A0f28gNvy0Kd" }],
-    });
-
-    const invoice = await stripe.invoices.list({
-      customer: customer.id,
-      limit: 1,
-    });
-
     // generate secret code
     const secretCode = crypto.randomBytes(4).toString("hex").toUpperCase();
 
@@ -60,8 +49,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
 
+    // add user id to stripe customer metadata
+    await stripe.customers.update(customer.id, {
+      metadata: { user_id: user.id },
+    });
+
+    // create subscription in stripe
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{ price: "price_1LCXUWA7aOT5A0f28gNvy0Kd" }],
+    });
+
+    const invoice = await stripe.invoices.list({
+      customer: customer.id,
+      limit: 1,
+    });
+
     // create customer in db
-    const prismaCustomer = await prisma.customer.create({
+    await prisma.customer.create({
       data: {
         customerId: customer.id,
         paymentMethod: paymentMethodId,

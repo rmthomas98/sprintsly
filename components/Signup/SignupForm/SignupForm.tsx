@@ -233,7 +233,7 @@ export const SignupForm = (props: Props) => {
           css={{
             position: "absolute",
             marginTop: 1,
-            opacity: errors.email ? 1 : 0,
+            opacity: errors.email && credentials !== "email" ? 1 : 0,
             transition: "300ms",
             pointerEvents: "none",
           }}
@@ -275,7 +275,10 @@ export const SignupForm = (props: Props) => {
           css={{
             position: "absolute",
             marginTop: 1,
-            opacity: errors.username?.type === "required" ? 1 : 0,
+            opacity:
+              errors.username?.type === "required" && credentials !== "username"
+                ? 1
+                : 0,
             transition: "300ms",
             pointerEvents: "none",
           }}
