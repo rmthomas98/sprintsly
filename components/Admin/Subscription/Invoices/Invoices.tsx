@@ -39,7 +39,6 @@ export const Invoices = ({ user }: any) => {
 
   const renderCell = (item: any, columnKey: any) => {
     const cellValue = item[columnKey];
-    console.log(cellValue);
     switch (columnKey) {
       case "invoice":
         return (

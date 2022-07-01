@@ -5,14 +5,17 @@ import { prisma } from "../../lib/db";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { event } = req.body;
-    let user;
-    let invoice;
 
-    switch (event.type) {
-      case "subscription.payment_succeeded":
+    if (event.type === "invoice.payment_succeeded") {
+      const { customer: stripeCustomer } = event.data.object;
+      const customer = await prisma.customer.findFirst({
+        where: { customerId: stripeCustomer },
+        include: { user: true },
+      });
+      const user = customer?.user;
     }
   } catch {
-    res.status(500).send("Server Error");
+    res.status(500).json({ recieved: true });
   }
 };
 
