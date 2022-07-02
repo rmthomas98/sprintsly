@@ -107,6 +107,7 @@ export const NavBar = () => {
           clearable
           aria-label="search"
           id="search"
+          animated={false}
         />
         <div className={styles.rightContainer}>
           <Dropdown placement="bottom-right">

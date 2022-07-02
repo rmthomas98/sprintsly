@@ -21,7 +21,6 @@ export const Badge = ({ type, text }: any) => {
           {text}
         </Text>
       );
-      break;
     case "error":
       return (
         <Text
@@ -41,7 +40,6 @@ export const Badge = ({ type, text }: any) => {
           {text}
         </Text>
       );
-      break;
     default:
       return (
         <Text
