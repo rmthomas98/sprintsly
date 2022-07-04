@@ -123,6 +123,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
     } else if (event.type === "customer.subscription.deleted") {
     } else if (event.type === "customer.subscription.updated") {
+      // probably wont need a webhook for this
     }
 
     res.status(200).json({ received: true });
