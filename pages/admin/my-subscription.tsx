@@ -3,7 +3,6 @@ import { prisma } from "../../lib/db";
 import { SubscriptionContainer } from "../../components/Admin/Subscription/SubscriptionContainer/SubscriptionContainer";
 
 const MySubscription = ({ user }: any) => {
-  console.log(user);
   return (
     <>
       <SubscriptionContainer user={user} />

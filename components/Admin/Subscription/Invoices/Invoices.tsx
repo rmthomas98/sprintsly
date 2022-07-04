@@ -12,12 +12,15 @@ export const Invoices = ({ user }: any) => {
     const userInvoices = user.subscription.cancelAtPeriodEnd
       ? user.invoices.slice(0, user.invoices.length - 1)
       : user.invoices;
+
+    // fuction to format the dollar amount
     const formatDollars = (str: string): string => {
       if (str === "0") return "$0.00";
       const first = str.slice(0, str.length - 2);
       const last = str.slice(str.length - 2);
       return `$${first}.${last}`;
     };
+
     const invoiceList = userInvoices.map((invoice: any, index: any) => {
       return {
         key: index,

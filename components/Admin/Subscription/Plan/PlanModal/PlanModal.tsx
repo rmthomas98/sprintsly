@@ -9,7 +9,6 @@ export const PlanModal = ({
 }: any) => {
   return (
     <Modal
-      blur
       onClose={() => setPeriodEndModal(false)}
       open={periodEndModal}
       css={{ py: "$6" }}

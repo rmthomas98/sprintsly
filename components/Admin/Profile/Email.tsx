@@ -156,7 +156,7 @@ export const Email = ({ user }: any) => {
         </Card>
       </form>
       {isActive && (
-        <Modal open={isActive} preventClose css={{ pt: "$8", pb: "$4" }} blur>
+        <Modal open={isActive} preventClose css={{ pt: "$8", pb: "$4" }}>
           <form onSubmit={handleSubmit(onEmailVerify)}>
             <Modal.Header css={{ flexDirection: "column" }}>
               <Text h3 weight="medium">

@@ -13,6 +13,7 @@ import styles from "./Plan.module.scss";
 import { useRouter } from "next/router";
 import { PlanModal } from "./PlanModal/PlanModal";
 import { format } from "date-fns";
+import { UpdatePlanModal } from "./PlanModal/UpdatePlanModal";
 
 export const Plan = ({ user }: any) => {
   const [price, setPrice] = useState<string>("");
@@ -21,6 +22,7 @@ export const Plan = ({ user }: any) => {
   const [periodEnd, setPeriodEnd] = useState<boolean>(
     !user.subscription.cancelAtPeriodEnd
   );
+  const [updatePlanModal, setUpdatePlanModal] = useState<boolean>(false);
   const { isDark } = useTheme();
   const router = useRouter();
 
@@ -81,6 +83,10 @@ export const Plan = ({ user }: any) => {
         setPeriodEndModal={setPeriodEndModal}
         handlePeriodEnd={handlePeriodEnd}
         periodEnd={periodEnd}
+      />
+      <UpdatePlanModal
+        updatePlanModal={updatePlanModal}
+        setUpdatePlanModal={setUpdatePlanModal}
       />
       <Card>
         <Card.Header>
@@ -179,7 +185,13 @@ export const Plan = ({ user }: any) => {
                     {periodEndLoading ? <Loading size="xs" /> : "Renew"}
                   </Button>
                 )}
-              <Button size="sm" auto shadow css={{ width: 81 }}>
+              <Button
+                size="sm"
+                auto
+                shadow
+                css={{ width: 81 }}
+                onClick={() => setUpdatePlanModal(true)}
+              >
                 Update
               </Button>
             </div>

@@ -68,7 +68,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             amountDue: event.data.object.amount_due.toString(),
             amountPaid: event.data.object.amount_paid.toString(),
             url: event.data.object.hosted_invoice_url,
-            status: event.data.object.status,
+            status: "paid",
             userId: Number(userId),
           },
           {
@@ -117,10 +117,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           date: event.data.object.period_end.toString(),
           amountDue: event.data.object.amount_due.toString(),
           amountPaid: event.data.object.amount_paid.toString(),
-          status: "Failed",
+          status: "failed",
           userId: Number(userId),
         },
       });
+    } else if (event.type === "customer.subscription.deleted") {
+    } else if (event.type === "customer.subscription.updated") {
     }
 
     res.status(200).json({ received: true });
