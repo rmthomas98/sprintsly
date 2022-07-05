@@ -40,8 +40,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       items: [{ price: "price_1LCWWLA7aOT5A0f2uxbA1BqY" }],
     });
 
-    console.log(subscription);
-
     // retrieve invoice from stripe
     const invoice = await stripe.invoices.list({
       customer: customer.id,
@@ -67,6 +65,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         verificationCode: secretCode,
         role: "SUPERADMIN",
         teamId: team.id,
+      },
+    });
+
+    // add metadata to stripe customer
+    await stripe.customers.update(customer.id, {
+      metadata: {
+        user_id: user.id,
+        plan: "teams",
+        tier: "pro",
       },
     });
 

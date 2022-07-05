@@ -53,7 +53,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await stripe.customers.update(customer.id, {
       metadata: {
         user_id: user.id,
-        plan: { type: "personal", tier: "pro" },
+        plan: "personal",
+        tier: "pro",
       },
     });
 

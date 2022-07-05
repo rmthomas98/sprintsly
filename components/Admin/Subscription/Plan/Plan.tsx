@@ -19,9 +19,7 @@ export const Plan = ({ user }: any) => {
   const [price, setPrice] = useState<string>("");
   const [periodEndLoading, setPeriodEndLoading] = useState<boolean>(false);
   const [periodEndModal, setPeriodEndModal] = useState<boolean>(false);
-  const [periodEnd, setPeriodEnd] = useState<boolean>(
-    !user.subscription.cancelAtPeriodEnd
-  );
+  const [periodEnd, setPeriodEnd] = useState<boolean>();
   const [updatePlanModal, setUpdatePlanModal] = useState<boolean>(false);
   const { isDark } = useTheme();
   const router = useRouter();
@@ -33,6 +31,10 @@ export const Plan = ({ user }: any) => {
     fontSize: 14,
     fontWeight: 500,
   };
+
+  useEffect(() => {
+    setPeriodEnd(!user.subscription.cancelAtPeriodEnd);
+  }, [user.subscription.cancelAtPeriodEnd]);
 
   useEffect(() => {
     const { type } = user.subscription;
@@ -59,10 +61,12 @@ export const Plan = ({ user }: any) => {
       periodEndAction,
       subscriptionId: user.subscription.subscriptionId,
     };
+
     const response = await axios.post(
       "/api/admin/subscription/period-end",
       options
     );
+
     if (response.data.status === "success") {
       setPeriodEndLoading(false);
       setPeriodEndModal(false);

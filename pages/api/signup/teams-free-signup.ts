@@ -58,6 +58,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<string>) => {
       },
     });
 
+    await stripe.customers.update(stripeCustomer.id, {
+      metadata: {
+        user_id: user.id,
+        plan: "teams",
+        tier: "free",
+      },
+    });
+
     // create customer in postgres
     await prisma.customer.create({
       data: {
