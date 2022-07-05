@@ -63,15 +63,18 @@ export const Plan = ({ user }: any) => {
       "/api/admin/subscription/period-end",
       options
     );
-    if (response.status === 200) {
+    if (response.data.status === "success") {
       setPeriodEndLoading(false);
       setPeriodEndModal(false);
       setPeriodEnd(!periodEnd);
-      toast.success(response.data, { style: toastStyle, duration: 5000 });
+      toast.success(response.data.message, {
+        style: toastStyle,
+        duration: 5000,
+      });
       router.replace(router.asPath);
     } else {
       setPeriodEndLoading(false);
-      toast.error(response.data, { style: toastStyle, duration: 5000 });
+      toast.error(response.data.message, { style: toastStyle, duration: 5000 });
     }
   };
 
@@ -85,6 +88,7 @@ export const Plan = ({ user }: any) => {
         periodEnd={periodEnd}
       />
       <UpdatePlanModal
+        user={user}
         updatePlanModal={updatePlanModal}
         setUpdatePlanModal={setUpdatePlanModal}
       />

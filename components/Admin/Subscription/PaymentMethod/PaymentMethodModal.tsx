@@ -22,7 +22,7 @@ export const PaymentMethodModal = ({ user, isActive, setIsActive }: any) => {
       setClientSecret(response.data.clientSecret);
     };
     getCredentials();
-  }, []);
+  }, [user.customer.paymentMethod]);
 
   const options = {
     clientSecret: clientSecret,

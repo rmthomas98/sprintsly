@@ -104,7 +104,7 @@ export const PaymentMethodElement = ({ user, setIsActive }: any) => {
             onClick={onSubmit}
             disabled={!stripe || isLoading}
           >
-            {isLoading ? <Loading size="sm" /> : "Confirm"}
+            {isLoading ? <Loading size="xs" /> : "Confirm"}
           </Button>
         </Row>
       </Modal.Footer>
