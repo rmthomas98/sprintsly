@@ -50,7 +50,7 @@ export const UpdatePlanModal = ({
         setSelectedPlan("teams-pro");
       }
     }
-  }, []);
+  }, [user]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
