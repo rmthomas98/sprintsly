@@ -2,14 +2,19 @@ import { Text, Modal, useTheme, Loading } from "@nextui-org/react";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { PaymentMethodElement } from "./PaymentMethodElement";
 import { Elements } from "@stripe/react-stripe-js";
+import { PaymentModalElement } from "./PaymentModalElement";
 
 const stripePromise = loadStripe(
   "pk_test_51LC8wPA7aOT5A0f22AH6sxL2nx9nV3oV9d5Tt9NU4a7UZkvNA7WRIHsQeXAUSj6rKDKL8bV42qyHRziVpzHGPWxK00Rah2MXOz"
 );
 
-export const PaymentMethodModal = ({ user, isActive, setIsActive }: any) => {
+export const PaymentModal = ({
+  user,
+  isActive,
+  setIsActive,
+  selectedPlan,
+}: any) => {
   const [clientSecret, setClientSecret] = useState<string>();
   const { isDark } = useTheme();
 
@@ -66,7 +71,11 @@ export const PaymentMethodModal = ({ user, isActive, setIsActive }: any) => {
       </Modal.Header>
       <Modal.Body>
         <Elements options={options} stripe={stripePromise}>
-          <PaymentMethodElement user={user} setIsActive={setIsActive} />
+          <PaymentModalElement
+            user={user}
+            setIsActive={setIsActive}
+            selectedPlan={selectedPlan}
+          />
         </Elements>
       </Modal.Body>
     </Modal>

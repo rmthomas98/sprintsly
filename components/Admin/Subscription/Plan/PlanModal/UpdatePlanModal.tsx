@@ -17,10 +17,13 @@ export const UpdatePlanModal = ({
   user,
   updatePlanModal,
   setUpdatePlanModal,
+  setPaymentModal,
+  selectedPlan,
+  setSelectedPlan,
 }: any) => {
   const [currentPlan, setCurrentPlan] = useState<any>();
-  const [selectedPlan, setSelectedPlan] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const { isDark } = useTheme();
   const router = useRouter();
 
@@ -53,13 +56,28 @@ export const UpdatePlanModal = ({
   }, []);
 
   const handleSubmit = async () => {
-    setIsLoading(true);
-    if (currentPlan === "personal-pro" && selectedPlan === "personal-free") {
-      const response = await axios.post("/api/admin/subscription/period-end", {
+    let response;
+    if (
+      (currentPlan === "personal-free" && selectedPlan === "personal-pro") ||
+      (currentPlan === "teams-free" && selectedPlan === "teams-pro") ||
+      (currentPlan === "teams-free" && selectedPlan === "personal-pro") ||
+      (currentPlan === "personal-free" && selectedPlan === "teams-pro")
+    ) {
+      setUpdatePlanModal(false);
+      setPaymentModal(true);
+    } else if (
+      (currentPlan === "personal-pro" && selectedPlan === "personal-free") ||
+      (currentPlan === "teams-pro" && selectedPlan === "teams-free")
+    ) {
+      setIsLoading(true);
+      response = await axios.post("/api/admin/subscription/period-end", {
         id: user.subscription.id,
         periodEndAction: true,
         subscriptionId: user.subscription.subscriptionId,
       });
+    }
+
+    if (response) {
       if (response.data.status === "success") {
         setIsLoading(false);
         setUpdatePlanModal(false);

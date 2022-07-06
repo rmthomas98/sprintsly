@@ -6,6 +6,7 @@ import { PaymentMethod } from "../PaymentMethod/PaymentMethod";
 import { Invoices } from "../Invoices/Invoices";
 
 export const SubscriptionContainer = ({ user }: any) => {
+  console.log(user.invoices);
   return (
     <>
       <Toaster />
@@ -14,11 +15,19 @@ export const SubscriptionContainer = ({ user }: any) => {
         <Spacer y={0.4} />
         <div className={styles.flexContainer}>
           <Plan user={user} />
-          <Spacer />
-          <PaymentMethod user={user} />
+          {user.subscription.tier === "PRO" && (
+            <>
+              <Spacer />
+              <PaymentMethod user={user} />
+            </>
+          )}
         </div>
-        <Spacer />
-        <Invoices user={user} />
+        {user.invoices.length > 0 && (
+          <>
+            <Spacer />
+            <Invoices user={user} />
+          </>
+        )}
       </div>
     </>
   );

@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { PlanModal } from "./PlanModal/PlanModal";
 import { format } from "date-fns";
 import { UpdatePlanModal } from "./PlanModal/UpdatePlanModal";
+import { PaymentModal } from "./PaymentModal/PaymentModal";
 
 export const Plan = ({ user }: any) => {
   const [price, setPrice] = useState<string>("");
@@ -21,6 +22,8 @@ export const Plan = ({ user }: any) => {
   const [periodEndModal, setPeriodEndModal] = useState<boolean>(false);
   const [periodEnd, setPeriodEnd] = useState<boolean>();
   const [updatePlanModal, setUpdatePlanModal] = useState<boolean>(false);
+  const [paymentModal, setPaymentModal] = useState<boolean>(false);
+  const [selectedPlan, setSelectedPlan] = useState<any>();
   const { isDark } = useTheme();
   const router = useRouter();
 
@@ -95,6 +98,15 @@ export const Plan = ({ user }: any) => {
         user={user}
         updatePlanModal={updatePlanModal}
         setUpdatePlanModal={setUpdatePlanModal}
+        setPaymentModal={setPaymentModal}
+        selectedPlan={selectedPlan}
+        setSelectedPlan={setSelectedPlan}
+      />
+      <PaymentModal
+        user={user}
+        isActive={paymentModal}
+        setIsActive={setPaymentModal}
+        selectedPlan={selectedPlan}
       />
       <Card>
         <Card.Header>
