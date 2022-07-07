@@ -15,12 +15,9 @@ import {
 } from "@nextui-org/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
-export const PaymentModalElement = ({
-  user,
-  setIsActive,
-  selectedPlan,
-}: any) => {
+export const PaymentModalElement = ({ setIsActive, selectedPlan }: any) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -40,6 +37,8 @@ export const PaymentModalElement = ({
 
     if (!stripe || !elements) return;
 
+    const session: any = await getSession();
+
     const setupCard: any = await stripe.confirmSetup({
       elements,
       redirect: "if_required",
@@ -53,7 +52,7 @@ export const PaymentModalElement = ({
     }
 
     const response = await axios.post("/api/admin/subscription/pro-upgrade", {
-      user,
+      id: session.id,
       selectedPlan,
       paymentMethodId: setupCard.setupIntent.payment_method,
     });

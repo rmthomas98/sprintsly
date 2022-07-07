@@ -13,6 +13,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { BiUser } from "react-icons/bi";
+import { getSession } from "next-auth/react";
 
 export const Name = ({ user }: any) => {
   const {
@@ -44,7 +45,8 @@ export const Name = ({ user }: any) => {
 
   const onSubmit = async (data: any) => {
     setIsLoading(true);
-    const options: any = { id: user.id, name: data.name };
+    const session: any = await getSession();
+    const options: any = { id: session.id, name: data.name };
     const response = await axios.post(
       "/api/admin/profile/update-name",
       options

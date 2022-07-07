@@ -4,36 +4,39 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { user, paymentMethodId, selectedPlan } = req.body;
-    const { id: customerId } = user.customer;
-    const { customerId: stripeCustomerId } = user.customer;
-    const { id: subscriptionId } = user.subscription;
+    const { id, selectedPlan, paymentMethodId } = req.body;
+
+    const user: any = await prisma.user.findUnique({
+      where: { id },
+      include: { customer: true, subscription: true, card: true },
+    });
+    const { customer } = user;
+    const { subscription } = user;
 
     // get payment method card details
     const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
     const { brand, last4, exp_month, exp_year } = paymentMethod.card;
-    console.log(brand, last4, exp_month, exp_year);
 
     // attach payment method to customer
     await stripe.paymentMethods.attach(paymentMethodId, {
-      customer: stripeCustomerId,
+      customer: customer.customerId,
     });
 
     // update customer in stripe
-    await stripe.customers.update(stripeCustomerId, {
+    await stripe.customers.update(customer.customerId, {
       invoice_settings: {
         default_payment_method: paymentMethodId,
       },
       metadata: {
         user_id: user.id,
         plan: selectedPlan === "personal-pro" ? "personal" : "teams",
-        tier: selectedPlan === "personal-pro" ? "pro" : "team",
+        tier: selectedPlan === "personal-pro" ? "pro" : "free",
       },
     });
 
     // create subscription for customer
-    const subscription = await stripe.subscriptions.create({
-      customer: stripeCustomerId,
+    const stripeSubscription = await stripe.subscriptions.create({
+      customer: customer.customerId,
       items: [
         {
           price:
@@ -46,7 +49,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // update customer in db
     await prisma.customer.update({
-      where: { id: customerId },
+      where: { id: customer.id },
       data: {
         paymentMethod: paymentMethodId,
         paymentStatus: "SUCCESS",
@@ -55,15 +58,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // update subscription in db
     await prisma.subscription.update({
-      where: { id: subscriptionId },
+      where: { id: subscription.id },
       data: {
-        subscriptionId: subscription.id,
-        subscriptionItem: subscription.items.data[0].id,
+        subscriptionId: stripeSubscription.id,
+        subscriptionItem: stripeSubscription.items.data[0].id,
         type: selectedPlan === "personal-pro" ? "PERSONAL" : "TEAMS",
         tier: "PRO",
-        nextInvoice: subscription.current_period_end.toString(),
+        nextInvoice: stripeSubscription.current_period_end.toString(),
       },
     });
+
+    // delete existing cards in db
+    if (user.card) await prisma.card.delete({ where: { id: user.card.id } });
 
     // create payment card in db
     await prisma.card.create({
@@ -78,13 +84,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // retreive latest invoice for customer
     const invoice = await stripe.invoices.list({
-      customer: stripeCustomerId,
+      customer: customer.customerId,
       limit: 1,
     });
 
     // retrive latest invoice for customer
     const upcomingInvoice = await stripe.invoices.retrieveUpcoming({
-      customer: stripeCustomerId,
+      customer: customer.customerId,
     });
 
     // create invoices in db

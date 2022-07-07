@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
 export const Picture = ({ user }: any) => {
   const [preview, setPreview] = useState<any>(null);
@@ -75,9 +76,10 @@ export const Picture = ({ user }: any) => {
 
   const handleImageUpdate = async () => {
     setIsLoading(true);
+    const session: any = await getSession();
     const formData = new FormData();
     formData.append("image", uploadedImage);
-    formData.append("id", user.id);
+    formData.append("id", session.id);
     const response = await axios.post(
       "/api/admin/profile/update-image",
       formData

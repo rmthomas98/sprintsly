@@ -14,8 +14,9 @@ import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
+import { getSession } from "next-auth/react";
 
-export const VerifyEmailForm = ({ id }: any) => {
+export const VerifyEmailForm = () => {
   const {
     handleSubmit,
     formState: { errors },
@@ -37,10 +38,11 @@ export const VerifyEmailForm = ({ id }: any) => {
 
   const onSubmit = async (data: any): Promise<void> => {
     setIsLoading(true);
+    const session: any = await getSession();
     const loadingToast = toast.loading("Checking code...", {
       style: toastStyle,
     });
-    const postData = { id, secretCode: data.secretCode };
+    const postData = { id: session.id, secretCode: data.secretCode };
     const response = await axios.post(
       "/api/admin/verify-email/verify-email",
       postData
@@ -69,12 +71,13 @@ export const VerifyEmailForm = ({ id }: any) => {
 
   const resendEmail = async (): Promise<void> => {
     if (resendLoading) return;
+    const session: any = await getSession();
     setResendLoading(true);
     const loadingToast = toast.loading("Sending email", {
       style: toastStyle,
     });
     const response = await axios.post("/api/admin/verify-email/resend-email", {
-      id,
+      id: session.id,
     });
 
     if (response.data === "success") {

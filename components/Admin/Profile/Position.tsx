@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { getSession } from "next-auth/react";
 
 export const Position = ({ user }: any) => {
   const {
@@ -44,7 +45,8 @@ export const Position = ({ user }: any) => {
 
   const onSubmit = async (data: any) => {
     setIsLoading(true);
-    const options: any = { position: data.position, id: user.id };
+    const session: any = await getSession();
+    const options: any = { position: data.position, id: session.id };
     const response = await axios.post(
       "/api/admin/profile/update-position",
       options

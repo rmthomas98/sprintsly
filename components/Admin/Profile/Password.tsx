@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { getSession } from "next-auth/react";
 
 export const Password = ({ user }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -45,7 +46,8 @@ export const Password = ({ user }: any) => {
 
   const onSubmit = async (data: any) => {
     setIsLoading(true);
-    const options: any = { id: user.id, password: data.password };
+    const session: any = await getSession();
+    const options: any = { id: session.id, password: data.password };
     const response = await axios.post(
       "/api/admin/profile/update-password",
       options

@@ -4,14 +4,20 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { id, periodEndAction, subscriptionId } = req.body;
+    const { id, periodEndAction } = req.body;
 
-    const subscription = await stripe.subscriptions.update(subscriptionId, {
+    const user: any = await prisma.user.findUnique({
+      where: { id },
+      include: { subscription: true },
+    });
+    const { subscription } = user;
+
+    await stripe.subscriptions.update(subscription.subscriptionId, {
       cancel_at_period_end: periodEndAction,
     });
 
     await prisma.subscription.update({
-      where: { id },
+      where: { id: subscription.id },
       data: { cancelAtPeriodEnd: periodEndAction },
     });
 

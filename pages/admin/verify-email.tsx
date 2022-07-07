@@ -3,10 +3,10 @@ import { prisma } from "../../lib/db";
 import { getSession } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 
-const VerifyEmail = ({ id }: any) => {
+const VerifyEmail = () => {
   return (
     <>
-      <VerifyEmailForm id={id} />
+      <VerifyEmailForm />
       <Toaster />
     </>
   );

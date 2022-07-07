@@ -27,7 +27,7 @@ export const PaymentModal = ({
       setClientSecret(response.data.clientSecret);
     };
     getCredentials();
-  }, [user.customer.paymentMethod]);
+  }, [user.customer.card]);
 
   const options = {
     clientSecret: clientSecret,
@@ -72,7 +72,6 @@ export const PaymentModal = ({
       <Modal.Body>
         <Elements options={options} stripe={stripePromise}>
           <PaymentModalElement
-            user={user}
             setIsActive={setIsActive}
             selectedPlan={selectedPlan}
           />

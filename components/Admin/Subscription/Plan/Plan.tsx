@@ -15,6 +15,7 @@ import { PlanModal } from "./PlanModal/PlanModal";
 import { format } from "date-fns";
 import { UpdatePlanModal } from "./PlanModal/UpdatePlanModal";
 import { PaymentModal } from "./PaymentModal/PaymentModal";
+import { getSession } from "next-auth/react";
 
 export const Plan = ({ user }: any) => {
   const [price, setPrice] = useState<string>("");
@@ -26,6 +27,7 @@ export const Plan = ({ user }: any) => {
   const [selectedPlan, setSelectedPlan] = useState<any>();
   const { isDark } = useTheme();
   const router = useRouter();
+  console.log(user);
 
   const toastStyle: any = {
     background: isDark ? "#ECEDEE" : "#16181A",
@@ -55,14 +57,10 @@ export const Plan = ({ user }: any) => {
 
   const handlePeriodEnd = async (periodEndAction: boolean): Promise<void> => {
     setPeriodEndLoading(true);
-    const options: {
-      id: number;
-      periodEndAction: boolean;
-      subscriptionId: string;
-    } = {
-      id: user.subscription.id,
+    const session: any = await getSession();
+    const options = {
+      id: session.id,
       periodEndAction,
-      subscriptionId: user.subscription.subscriptionId,
     };
 
     const response = await axios.post(

@@ -15,6 +15,7 @@ import {
 } from "@nextui-org/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
 export const PaymentMethodElement = ({ user, setIsActive }: any) => {
   const stripe = useStripe();
@@ -36,6 +37,8 @@ export const PaymentMethodElement = ({ user, setIsActive }: any) => {
 
     if (!stripe || !elements) return;
 
+    const session: any = await getSession();
+
     const setupCard: any = await stripe.confirmSetup({
       elements,
       redirect: "if_required",
@@ -53,8 +56,7 @@ export const PaymentMethodElement = ({ user, setIsActive }: any) => {
         ? "/api/admin/payment-method/pay-invoice"
         : "/api/admin/payment-method/update",
       {
-        userId: user.customer.userId,
-        customerId: user.customer.customerId, // id of customer in stripe
+        id: session.id,
         paymentMethodId: setupCard.setupIntent.payment_method, // id of payment method just entered
       }
     );

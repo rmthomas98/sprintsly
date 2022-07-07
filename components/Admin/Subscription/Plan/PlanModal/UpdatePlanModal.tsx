@@ -12,6 +12,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { CustomerProfiles } from "aws-sdk";
+import { getSession } from "next-auth/react";
 
 export const UpdatePlanModal = ({
   user,
@@ -57,6 +59,7 @@ export const UpdatePlanModal = ({
 
   const handleSubmit = async () => {
     let response;
+    const session: any = await getSession();
     if (
       (currentPlan === "personal-free" && selectedPlan === "personal-pro") ||
       (currentPlan === "teams-free" && selectedPlan === "teams-pro") ||
@@ -71,9 +74,8 @@ export const UpdatePlanModal = ({
     ) {
       setIsLoading(true);
       response = await axios.post("/api/admin/subscription/period-end", {
-        id: user.subscription.id,
+        id: session.id,
         periodEndAction: true,
-        subscriptionId: user.subscription.subscriptionId,
       });
     }
 

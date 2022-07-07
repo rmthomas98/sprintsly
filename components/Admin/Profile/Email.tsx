@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { FaUserSecret } from "react-icons/fa";
 import { BiEnvelope } from "react-icons/bi";
+import { getSession } from "next-auth/react";
 
 export const Email = ({ user }: any) => {
   const [email, setEmail] = useState<any>(user.email);
@@ -50,9 +51,9 @@ export const Email = ({ user }: any) => {
   }, [email]);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     setIsLoading(true);
-    const options: any = { id: user.id, email: data.email };
+    const session: any = await getSession();
+    const options: any = { id: session.id, email: data.email };
     const response = await axios.post(
       "/api/admin/profile/email/send-email-verification",
       options
@@ -72,7 +73,8 @@ export const Email = ({ user }: any) => {
 
   const onEmailVerify = async (data: any) => {
     setModalLoading(true);
-    const options: any = { id: user.id, code: data.code, email: email };
+    const session: any = await getSession();
+    const options: any = { id: session.id, code: data.code, email: email };
     const response = await axios.post(
       "/api/admin/profile/email/verify-email",
       options

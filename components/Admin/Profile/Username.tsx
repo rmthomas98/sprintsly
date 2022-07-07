@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { getSession } from "next-auth/react";
 
 export const Username = ({ user }: any) => {
   const [username, setUsername] = useState<any>(user.username);
@@ -49,7 +50,8 @@ export const Username = ({ user }: any) => {
 
   const onSubmit = async (data: any) => {
     setIsLoading(true);
-    const options: any = { id: user.id, username: data.username };
+    const session: any = await getSession();
+    const options: any = { id: session.id, username: data.username };
     const response = await axios.post(
       "/api/admin/profile/update-username",
       options
