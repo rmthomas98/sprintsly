@@ -22,6 +22,7 @@ export const UpdatePlanModal = ({
   setPaymentModal,
   selectedPlan,
   setSelectedPlan,
+  setConfirmationModal,
 }: any) => {
   const [currentPlan, setCurrentPlan] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -77,6 +78,12 @@ export const UpdatePlanModal = ({
         id: session.id,
         periodEndAction: true,
       });
+    } else if (
+      (currentPlan === "personal-pro" && selectedPlan === "teams-free") ||
+      (currentPlan === "teams-pro" && selectedPlan === "personal-free")
+    ) {
+      setUpdatePlanModal(false);
+      setConfirmationModal(true);
     }
 
     if (response) {
@@ -93,12 +100,29 @@ export const UpdatePlanModal = ({
     }
   };
 
+  const handleClose = () => {
+    setUpdatePlanModal(false);
+    if (user.subscription.type === "PERSONAL") {
+      if (user.subscription.tier === "FREE") {
+        setCurrentPlan("personal-free");
+        setSelectedPlan("personal-free");
+      } else {
+        setCurrentPlan("personal-pro");
+        setSelectedPlan("personal-pro");
+      }
+    } else {
+      if (user.subscription.tier === "FREE") {
+        setCurrentPlan("teams-free");
+        setSelectedPlan("teams-free");
+      } else {
+        setCurrentPlan("teams-pro");
+        setSelectedPlan("teams-pro");
+      }
+    }
+  };
+
   return (
-    <Modal
-      open={updatePlanModal}
-      onClose={() => setUpdatePlanModal(false)}
-      css={{ py: "$6" }}
-    >
+    <Modal open={updatePlanModal} onClose={handleClose} css={{ py: "$6" }}>
       <Modal.Header>
         <Text h3>Change your plan</Text>
       </Modal.Header>

@@ -64,6 +64,11 @@ export const PaymentModalElement = ({ setIsActive, selectedPlan }: any) => {
         style: toastStyle,
       });
       router.replace(router.asPath);
+    } else {
+      setIsLoading(false);
+      toast.error("Something went wrong. Please try again.", {
+        style: toastStyle,
+      });
     }
   };
 

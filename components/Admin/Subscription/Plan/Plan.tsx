@@ -15,6 +15,7 @@ import { PlanModal } from "./PlanModal/PlanModal";
 import { format } from "date-fns";
 import { UpdatePlanModal } from "./PlanModal/UpdatePlanModal";
 import { PaymentModal } from "./PaymentModal/PaymentModal";
+import { ConfirmationModal } from "./PlanModal/ConfirmationModal";
 import { getSession } from "next-auth/react";
 
 export const Plan = ({ user }: any) => {
@@ -25,6 +26,7 @@ export const Plan = ({ user }: any) => {
   const [updatePlanModal, setUpdatePlanModal] = useState<boolean>(false);
   const [paymentModal, setPaymentModal] = useState<boolean>(false);
   const [selectedPlan, setSelectedPlan] = useState<any>();
+  const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
   const { isDark } = useTheme();
   const router = useRouter();
   console.log(user);
@@ -99,12 +101,17 @@ export const Plan = ({ user }: any) => {
         setPaymentModal={setPaymentModal}
         selectedPlan={selectedPlan}
         setSelectedPlan={setSelectedPlan}
+        setConfirmationModal={setConfirmationModal}
       />
       <PaymentModal
         user={user}
         isActive={paymentModal}
         setIsActive={setPaymentModal}
         selectedPlan={selectedPlan}
+      />
+      <ConfirmationModal
+        confirmationModal={confirmationModal}
+        setConfirmationModal={setConfirmationModal}
       />
       <Card>
         <Card.Header>

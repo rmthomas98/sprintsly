@@ -27,7 +27,7 @@ export const PaymentModal = ({
       setClientSecret(response.data.clientSecret);
     };
     getCredentials();
-  }, [user.customer.card]);
+  }, [user]);
 
   const options = {
     clientSecret: clientSecret,

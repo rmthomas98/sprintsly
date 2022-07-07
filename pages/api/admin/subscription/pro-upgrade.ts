@@ -30,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       metadata: {
         user_id: user.id,
         plan: selectedPlan === "personal-pro" ? "personal" : "teams",
-        tier: selectedPlan === "personal-pro" ? "pro" : "free",
+        tier: "pro",
       },
     });
 
