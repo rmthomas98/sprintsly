@@ -112,6 +112,7 @@ export const Plan = ({ user }: any) => {
       <ConfirmationModal
         confirmationModal={confirmationModal}
         setConfirmationModal={setConfirmationModal}
+        selectedPlan={selectedPlan}
       />
       <Card>
         <Card.Header>

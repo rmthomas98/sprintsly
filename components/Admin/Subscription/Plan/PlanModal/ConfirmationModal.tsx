@@ -1,9 +1,20 @@
 import { Modal, Text, Button, Row, Spacer } from "@nextui-org/react";
+import axios from "axios";
+import { getSession } from "next-auth/react";
 
 export const ConfirmationModal = ({
   setConfirmationModal,
   confirmationModal,
+  selectedPlan,
 }: any) => {
+  const handleSubmit = async () => {
+    const session: any = await getSession();
+    const response = axios.post("/api/admin/subscription/cross-downgrade", {
+      id: session.id,
+      plan: selectedPlan,
+    });
+  };
+
   return (
     <Modal
       open={confirmationModal}

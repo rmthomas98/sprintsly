@@ -7,13 +7,15 @@ import {
   Spacer,
   Loading,
   useTheme,
+  Link,
 } from "@nextui-org/react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
-import { CustomerProfiles } from "aws-sdk";
 import { getSession } from "next-auth/react";
+import NextLink from "next/link";
+import { BiRightArrowAlt } from "react-icons/bi";
 
 export const UpdatePlanModal = ({
   user,
@@ -59,6 +61,7 @@ export const UpdatePlanModal = ({
   }, [user]);
 
   const handleSubmit = async () => {
+    if (currentPlan === selectedPlan) return;
     let response;
     const session: any = await getSession();
     if (
@@ -100,29 +103,12 @@ export const UpdatePlanModal = ({
     }
   };
 
-  const handleClose = () => {
-    setUpdatePlanModal(false);
-    if (user.subscription.type === "PERSONAL") {
-      if (user.subscription.tier === "FREE") {
-        setCurrentPlan("personal-free");
-        setSelectedPlan("personal-free");
-      } else {
-        setCurrentPlan("personal-pro");
-        setSelectedPlan("personal-pro");
-      }
-    } else {
-      if (user.subscription.tier === "FREE") {
-        setCurrentPlan("teams-free");
-        setSelectedPlan("teams-free");
-      } else {
-        setCurrentPlan("teams-pro");
-        setSelectedPlan("teams-pro");
-      }
-    }
-  };
-
   return (
-    <Modal open={updatePlanModal} onClose={handleClose} css={{ py: "$6" }}>
+    <Modal
+      open={updatePlanModal}
+      onClose={() => setUpdatePlanModal(false)}
+      css={{ py: "$6" }}
+    >
       <Modal.Header>
         <Text h3>Change your plan</Text>
       </Modal.Header>
@@ -131,7 +117,7 @@ export const UpdatePlanModal = ({
           selectionMode="single"
           bordered
           showSelectionCheckboxes={true}
-          defaultSelectedKeys={[currentPlan]}
+          defaultSelectedKeys={[selectedPlan]}
           aria-label="plans"
           onSelectionChange={(selected: any) => {
             setSelectedPlan(selected.currentKey);
@@ -192,6 +178,21 @@ export const UpdatePlanModal = ({
             </Table.Row>
           </Table.Body>
         </Table>
+        <NextLink href="/pricing">
+          <a
+            target="blank"
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            Compare plans
+            <BiRightArrowAlt style={{ marginLeft: 4 }} />
+          </a>
+        </NextLink>
       </Modal.Body>
       <Modal.Footer>
         <Row justify="center">
