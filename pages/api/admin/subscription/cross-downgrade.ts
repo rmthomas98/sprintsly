@@ -11,6 +11,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       where: { id },
       include: { subscription: true, customer: true, invoices: true },
     });
+
+    const { subscription, customer, invoices } = user;
+    console.log(invoices.reverse()[0]);
+
+    // get latest invoice and delete
+    const latestInvoice = invoices.reverse()[0];
+    await prisma.invoice.delete({ where: { id: latestInvoice.id } });
+
+    // Delete current stripe subscription
+    // await stripe.subscriptions.delete(subscription.subscriptionId);
+
+    res.status(200).send("success");
   } catch {
     res.status(500).send("Error");
   }

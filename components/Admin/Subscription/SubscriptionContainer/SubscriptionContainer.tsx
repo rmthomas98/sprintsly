@@ -6,7 +6,6 @@ import { PaymentMethod } from "../PaymentMethod/PaymentMethod";
 import { Invoices } from "../Invoices/Invoices";
 
 export const SubscriptionContainer = ({ user }: any) => {
-  console.log(user.invoices);
   return (
     <>
       <Toaster />

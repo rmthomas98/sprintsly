@@ -29,7 +29,6 @@ export const Plan = ({ user }: any) => {
   const [confirmationModal, setConfirmationModal] = useState<boolean>(false);
   const { isDark } = useTheme();
   const router = useRouter();
-  console.log(user);
 
   const toastStyle: any = {
     background: isDark ? "#ECEDEE" : "#16181A",

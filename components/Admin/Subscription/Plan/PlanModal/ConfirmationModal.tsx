@@ -1,18 +1,51 @@
-import { Modal, Text, Button, Row, Spacer } from "@nextui-org/react";
+import {
+  Modal,
+  Text,
+  Button,
+  Row,
+  Spacer,
+  Loading,
+  useTheme,
+} from "@nextui-org/react";
 import axios from "axios";
 import { getSession } from "next-auth/react";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const ConfirmationModal = ({
   setConfirmationModal,
   confirmationModal,
   selectedPlan,
 }: any) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isDark } = useTheme();
+
+  const toastStyle: any = {
+    background: isDark ? "#ECEDEE" : "#16181A",
+    color: isDark ? "#16181A" : "#ECEDEE",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: 500,
+  };
+
   const handleSubmit = async () => {
     const session: any = await getSession();
-    const response = axios.post("/api/admin/subscription/cross-downgrade", {
-      id: session.id,
-      plan: selectedPlan,
-    });
+    const response: any = axios.post(
+      "/api/admin/subscription/cross-downgrade",
+      {
+        id: session.id,
+        plan: selectedPlan,
+      }
+    );
+
+    if (response.data === "success") {
+      setIsLoading(false);
+      toast.success("Subscription updated successfully", { style: toastStyle });
+      setConfirmationModal(false);
+    } else {
+      setIsLoading(false);
+      toast.error("Error updating plan.", { style: toastStyle });
+    }
   };
 
   return (
@@ -46,8 +79,8 @@ export const ConfirmationModal = ({
             Close
           </Button>
           <Spacer x={0.6} />
-          <Button auto shadow css={{ width: "100%" }}>
-            Confirm
+          <Button auto shadow css={{ width: "100%" }} onClick={handleSubmit}>
+            {isLoading ? <Loading size="xs" /> : "Confirm"}
           </Button>
         </Row>
       </Modal.Footer>
